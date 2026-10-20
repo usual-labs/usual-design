@@ -4,33 +4,34 @@ Project-owned design rules. Deterministic feedback for developers and coding age
 
 Usual Design is the first open-source tool from **Usual Labs**. It helps React/Tailwind projects enforce approved values, explicit semantic conventions, and shared component usage. The project owns the contract; its existing coding agent helps discover conventions and repair violations.
 
-This is an unreleased development build. Source is available at [usual-labs/usual-design](https://github.com/usual-labs/usual-design). npm package and `usual.dev` publication are pending; no published installation command is implied.
+Install [@usualui/lint](https://www.npmjs.com/package/@usualui/lint) from npm. Source is available at [usual-labs/usual-design](https://github.com/usual-labs/usual-design). The website remains a local preview.
 
-## Run locally
+## Quick start
 
-Use Node.js 22.12 or newer and npm. From this source checkout:
+Use Node.js **22.12 or newer**. From your React/Tailwind v4 project, create an initial manifest:
 
 ```sh
-npm ci
-npm run build
-node dist/cli.js --help
+npx @usualui/lint init --write
 ```
 
-From the same directory, target a React/Tailwind v4 project explicitly:
+To preview the draft without writing files, run `npx @usualui/lint init` instead. `--write` creates `usual.design.json` with all categories inactive and refuses to overwrite an existing manifest. Use `--root /path/to/project` to target another directory. For a version-pinned invocation, use `npx @usualui/lint@0.1.0 init --write`.
+
+Install the tool locally for repeatable checks and agent hooks:
 
 ```sh
-node dist/cli.js init --root /path/to/project
-node dist/cli.js init --root /path/to/project --write
-node dist/cli.js audit --root /path/to/project --save
-node dist/cli.js wizard --root /path/to/project --port 0
+npm install --save-dev @usualui/lint
+npx --no-install usual-design audit --save
+npx --no-install usual-design wizard --port 0
 ```
 
-Open the local URL printed by the wizard command. Use the existing coding agent to review the draft contract, resolve selected findings, and rerun the full audit. Activate only resolved categories:
+The npm package is `@usualui/lint`; its executable is `usual-design`. The one-off `npx` command does not add the dependency to your project. An initial audit can exit `1` while policy decisions and findings remain unresolved.
+
+Open the local URL printed by the wizard command. Use your existing coding agent to review the draft contract and resolve selected findings. Activate only resolved categories:
 
 ```sh
-node dist/cli.js activate --root /path/to/project --categories colors,components --write
-node dist/cli.js check --root /path/to/project
-node dist/cli.js check --root /path/to/project --json
+npx --no-install usual-design activate --categories colors,components --write
+npx --no-install usual-design check
+npx --no-install usual-design check --json
 ```
 
 An inactive category is **entirely unchecked by lint**, including new violations. The full audit still reports it. A passing check establishes compliance with the configured active rules and supported analysis; it does not establish visual quality or runtime layout correctness.

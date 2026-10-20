@@ -2,7 +2,7 @@
 
 ## Release and reporting status
 
-Usual Design is an unreleased development candidate. There are no publicly supported release lines yet. Security fixes currently target the development source; a version support table will be added when releases exist.
+The first public release is `@usualui/lint@0.1.0`, published on 2026-10-20. Security fixes target the development source and a subsequent release; no older release line or backport schedule is promised.
 
 **Private vulnerability reporting is not configured in this checkout.** Before opening public contributions, the repository owner must enable and verify a private reporting route, name the people who monitor it, and update this document. This file alone does not enable GitHub reporting.
 

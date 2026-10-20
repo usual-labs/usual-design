@@ -2,26 +2,23 @@
 
 Usual Design turns the project’s design decisions into deterministic checks. It is intended for AI-heavy teams using React, JavaScript/TypeScript, and Tailwind v4. Read the [compatibility boundaries](compatibility.md) before treating a pass as evidence.
 
-## Build and target a project
+## Install and initialize
 
-The initial distribution is this source checkout. Publication is separate work; the intended npm package name is not a claim that it is published or available.
-
-```sh
-npm ci
-npm run build
-node dist/cli.js --help
-```
-
-Node.js 22.12 or newer is required. Commands below run from the Usual Design checkout. Replace `/path/to/project` with the target project; use an absolute executable path if running from another directory.
+Use Node.js **22.12 or newer**. From the React/Tailwind v4 project you want to check:
 
 ```sh
-node dist/cli.js init --root /path/to/project
-node dist/cli.js init --root /path/to/project --write
-node dist/cli.js audit --root /path/to/project --save
-node dist/cli.js wizard --root /path/to/project --port 0
+npx @usualui/lint init
+npx @usualui/lint init --write
+npm install --save-dev @usualui/lint
+npx --no-install usual-design audit --save
+npx --no-install usual-design wizard --port 0
 ```
 
-`init` prints a draft; `--write` requests creation of the manifest. Review the result with the onboarding skill in your existing agent. A draft inventories evidence and leaves categories inactive; observed values are not user-approved design policy.
+The first command previews a draft without writing files. The second creates `usual.design.json` and refuses to overwrite an existing manifest. The draft inventories evidence and leaves all categories inactive; observed values are not user-approved design policy. Review the result with your existing coding agent. An initial audit can exit `1` for unresolved findings or policy decisions.
+
+`npx @usualui/lint` runs the package's single executable, `usual-design`. It does not install a project dependency; the `npm install --save-dev` step is needed for durable scripts and agent hooks. Keep the resulting package and lockfile changes in version control. To pin a one-off command, use `npx @usualui/lint@0.1.0 init --write`.
+
+Commands below use the project-local executable. Run them from the target project; replace `/path/to/project` when an explicit root is shown. Source development setup is in the [development guide](development.md).
 
 `wizard` prints a loopback URL. Open it manually. The interface uses token specimens and source references. It does not automatically import application components, execute project configuration, boot an app, or navigate it.
 
@@ -54,35 +51,39 @@ The default filename is `usual.design.json`. Pass `--config relative/path.json` 
     "spacing": { "classes": ["p-4", "p-6", "gap-4", "mt-4"] },
     "shape": { "classes": ["rounded-md", "border", "shadow-sm"] }
   },
-  "semantics": [{
-    "id": "primary-action",
-    "target": { "element": "a", "props": { "data-intent": "primary" } },
-    "requireClasses": ["bg-action", "text-on-action"]
-  }],
-  "components": [{
-    "id": "shared-button",
-    "element": "button",
-    "replacement": { "name": "Button", "from": "./ui/Button" },
-    "ignore": ["src/ui/Button.tsx"]
-  }]
+  "semantics": [
+    {
+      "id": "primary-action",
+      "target": { "element": "a", "props": { "data-intent": "primary" } },
+      "requireClasses": ["bg-action", "text-on-action"]
+    }
+  ],
+  "components": [
+    {
+      "id": "shared-button",
+      "element": "button",
+      "replacement": { "name": "Button", "from": "./ui/Button" },
+      "ignore": ["src/ui/Button.tsx"]
+    }
+  ]
 }
 ```
 
 This is an illustrative starting point, not a complete policy for every project. A category must have the policy it needs before activation.
 
-| Field | Purpose |
-| --- | --- |
-| `version` | Explicit manifest format version. |
-| `include` | Project-relative file patterns to analyze. Include every application source/style path whose design rules you expect to enforce. |
-| `ignore` | Optional project-relative exclusions. Exclusions are policy decisions requiring review. |
-| `tokens` | Optional stylesheet paths used to inventory token definitions. They do not approve all observed values automatically. |
-| `active` | Enforced categories: `colors`, `typography`, `spacing`, `shape`, `components`. |
-| `allowed` | Per-style-category permitted classes, CSS variable names, and literal CSS values. |
-| `semantics` | Rules targeting explicit elements or imported components with optional literal props. |
-| `imports` | Optional forbidden modules/exported names and replacement guidance. |
-| `components` | Rules requiring an approved replacement for configured native elements. |
-| `exceptions` | Narrow exceptions with `ruleId`, `file`, and a human-readable `reason`. |
-| `preview` | Optional link to an existing, user-run preview; the checker does not start it. |
+| Field        | Purpose                                                                                                                          |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| `version`    | Explicit manifest format version.                                                                                                |
+| `include`    | Project-relative file patterns to analyze. Include every application source/style path whose design rules you expect to enforce. |
+| `ignore`     | Optional project-relative exclusions. Exclusions are policy decisions requiring review.                                          |
+| `tokens`     | Optional stylesheet paths used to inventory token definitions. They do not approve all observed values automatically.            |
+| `active`     | Enforced categories: `colors`, `typography`, `spacing`, `shape`, `components`.                                                   |
+| `allowed`    | Per-style-category permitted classes, CSS variable names, and literal CSS values.                                                |
+| `semantics`  | Rules targeting explicit elements or imported components with optional literal props.                                            |
+| `imports`    | Optional forbidden modules/exported names and replacement guidance.                                                              |
+| `components` | Rules requiring an approved replacement for configured native elements.                                                          |
+| `exceptions` | Narrow exceptions with `ruleId`, `file`, and a human-readable `reason`.                                                          |
+| `preview`    | Optional link to an existing, user-run preview; the checker does not start it.                                                   |
 
 The JSON schema shipped in `schema/manifest.schema.json` is authoritative for accepted fields. Keep the manifest in version control with its decisions and repair records.
 
@@ -158,7 +159,7 @@ Semantic findings belong to the relevant style/component category. Coverage is a
 Save an audit before selecting repairs. The wizard records selected work and decisions in `docs/usual-design` within the project. Keep durable records in version control where appropriate; they are local project artifacts, not a hosted backlog. The separate `.usual-design` directory holds integration ownership and local hook state.
 
 ```sh
-node dist/cli.js audit --root /path/to/project --save
+npx --no-install usual-design audit --root /path/to/project --save
 ```
 
 The user selects a repair batch, then gives the saved plan to their existing agent. The agent changes application code, reruns the audit, and leaves deferred work documented. Recheck freshness before resuming an old plan because source and policy may have changed.
@@ -166,34 +167,34 @@ The user selects a repair batch, then gives the saved plan to their existing age
 Ordinary repair authorization does not authorize changing `allowed`, `ignore`, `exceptions`, activation settings, or rule requirements. A design-policy change requires an explicit, separate decision and a visible review of those files.
 
 ```sh
-node dist/cli.js activate --root /path/to/project --categories colors,typography --write
-node dist/cli.js check --root /path/to/project
+npx --no-install usual-design activate --root /path/to/project --categories colors,typography --write
+npx --no-install usual-design check --root /path/to/project
 ```
 
 Activation requires current evidence that the selected categories are resolved. If typography is skipped, lint does not check typography at all, including new typography violations. The audit continues to document it. There is no baseline that silently accepts individual violations in an active category.
 
 ## Put the same check in your workflow
 
-First validate the command directly. From a target project, a local development script can invoke the built checker by absolute path:
+First validate the command directly. With the package installed in your project, add an npm script:
 
 ```json
 {
   "scripts": {
-    "design:check": "node /path/to/usual-design/dist/cli.js check --root ."
+    "lint:design": "usual-design check"
   }
 }
 ```
 
-This absolute path is a local development arrangement. A published package can later replace it with the installed `usual-design` executable after actual publication is verified.
+Run `npm run lint:design` locally and in CI after installing locked dependencies. npm scripts resolve the project-local executable.
 
 Use the generated preview before requesting setup writes. First-class agent setup targets Codex and Claude Code. Review proposed instruction, skill, and hook changes; preserve existing user content. Automatic hooks depend on each agent’s version, trust settings, and supported lifecycle events. A skill instruction to run a command is not an automatic hook.
 
 ```sh
-node dist/cli.js setup --root /path/to/project --host both --hooks
-node dist/cli.js setup --root /path/to/project --host both --hooks --write
+npx --no-install usual-design setup --root /path/to/project --host both --hooks
+npx --no-install usual-design setup --root /path/to/project --host both --hooks --write
 ```
 
-The generated npm script uses the locally installed `usual-design` executable. Before triggering it, build this source checkout and install the local package as a development dependency in the target project, for example `npm install --save-dev /path/to/usual-design`. This local install may update that project’s lockfile; review the change. Generated native hooks invoke the locally installed built CLI without downloading a package. Add `--commit-hook` to the setup preview only if you want the optional hook; existing hook managers and conflicting hooks require manual integration.
+The generated npm script uses the locally installed `usual-design` executable. Install `@usualui/lint` as a development dependency in the target project before triggering it; review the resulting lockfile changes. Generated native hooks invoke the locally installed built CLI without downloading a package. Add `--commit-hook` to the setup preview only if you want the optional hook; existing hook managers and conflicting hooks require manual integration.
 
 Commit hooks provide local feedback. A working-tree check does not prove the Git index is clean when files are partially staged. Run the independent CI check against the committed checkout. Do not assume a local executable path exists on the CI runner; build/install the tool from the exact source/package the workflow is meant to validate.
 
@@ -202,14 +203,14 @@ Do not record a setup integration as working until its actual event has triggere
 ## Output, errors, and troubleshooting
 
 ```sh
-node dist/cli.js check --root /path/to/project --json
+npx --no-install usual-design check --root /path/to/project --json
 ```
 
-| Exit | Meaning |
-| --- | --- |
-| `0` | The requested operation succeeded; for checks, configured active rules passed. |
-| `1` | Design-policy or active-coverage failures were found. |
-| `2` | Invalid configuration, compatibility issue, or operational failure prevented a valid result. |
+| Exit | Meaning                                                                                      |
+| ---- | -------------------------------------------------------------------------------------------- |
+| `0`  | The requested operation succeeded; for checks, configured active rules passed.               |
+| `1`  | Design-policy or active-coverage failures were found.                                        |
+| `2`  | Invalid configuration, compatibility issue, or operational failure prevented a valid result. |
 
 Human output is intended for development; structured output is intended for agents and automation. Findings include a rule ID, file, line/column, explanation, and expected result where available. Output order is deterministic so repeated results are easy to compare.
 

@@ -1,5 +1,7 @@
 # Items for Armin when back
 
+Release update (2026-10-20): `@usualui/lint@0.1.0` is published and verified through registry integrity and a clean install. This supersedes the npm login, scope-access, and first-publication blockers below. Trusted-publisher configuration and an actual OIDC publication remain pending.
+
 Repository update (2026-10-20): the user authorized pushing to `usual-labs/usual-design`, and the public GitHub repository has been created at https://github.com/usual-labs/usual-design. This supersedes the repository-creation and destination-pending notes below. npm publication, website deployment, confidential reporting contacts, and protection settings remain separate tasks.
 
 Implementation has continued without waiting for these decisions. This file contains only actions/decisions needing your involvement; technical status is in [progress](../implementation/progress.md). None of these items is an instruction to publish or contact anyone automatically.

@@ -2,23 +2,15 @@
 
 The npm package is `@usualui/lint`. Its executable remains `usual-design`, so project scripts and existing CLI commands keep the same name. Other Usual packages can share the `@usualui` scope without becoming part of this package.
 
-No npm release is implied by this configuration. The initial registry check returned no public package, and the local npm session was unauthorized. Scope ownership and publishing permission need an authenticated npm owner.
+## First release completed
 
-## One-time owner setup
+`@usualui/lint@0.1.0` was published on 2026-10-20 using the authenticated npm owner session. The archive came from the successful GitHub Actions dry run for commit `76da0d3`. Its registry integrity matched the CI archive; a clean registry installation passed `usual-design --version` and `--help`. This first release has no GitHub publish provenance.
 
-1. Sign into npm and create or confirm ownership of the `usualui` user/organization scope. Grant the publishing account permission for public packages. Do not paste credentials or tokens into issues or chat.
-2. Review the initial `0.1.0` candidate, license, release notes, and known compatibility boundaries.
-3. For the first package publication, use an authenticated owner session. From a clean checkout, run the checks in the [maintainer guide](maintaining.md) and `npm run verify:package`. Then explicitly publish the verified archive:
+Do not try to publish `0.1.0` again. Its archive is immutable. Updated documentation in the source repository will reach the npm package with a subsequent release.
 
-   ```sh
-   npm login
-   npm whoami
-   npm publish .usual-design/artifacts/usualui-lint-0.1.0.tgz --access public --ignore-scripts --registry https://registry.npmjs.org/
-   ```
+## Configure trusted publishing for future releases
 
-   Complete npm's authentication/2FA prompts yourself. This command is a public release, not a dry run. A local initial publish does not have GitHub provenance. Do not rerun it blindly after an uncertain response; check the registry first.
-
-4. In the package's npm settings, add a GitHub Actions trusted publisher:
+1. In the package's npm settings, add a GitHub Actions trusted publisher:
 
    | Setting           | Value          |
    | ----------------- | -------------- |
@@ -28,8 +20,10 @@ No npm release is implied by this configuration. The initial registry check retu
    | Environment       | `npm`          |
    | Allowed action    | Publish        |
 
-5. In GitHub, configure the `npm` environment to allow only `main`. Add required reviewers if the team wants a separate release approval. The workflow already refuses other branches; environment protections are additional platform settings, not established by this file.
-6. Use the workflow for the next unpublished version. Under npm's current rules, a new trusted-publisher configuration must complete a successful publication within two days or it expires. Create it when ready to release, not weeks ahead.
+2. In GitHub, configure the `npm` environment to allow only `main`. Add required reviewers if the team wants a separate release approval. The workflow already refuses other branches; environment protections are additional platform settings, not established by this file.
+3. Use the workflow for the next unpublished version. Under npm's current rules, a new trusted-publisher configuration must complete a successful publication within two days or it expires. Create it when ready to release, not weeks ahead.
+
+Trusted-publisher authentication has not yet been verified by an actual OIDC publication. The earlier workflow run deliberately skipped that step.
 
 No `NPM_TOKEN` repository secret is required for trusted publishing. Do not configure npm's organization and GitHub's organization as if they were the same identity.
 
@@ -51,7 +45,7 @@ npm view @usualui/lint version dist-tags --json
 npm view @usualui/lint@0.1.0 dist.integrity --json
 ```
 
-Use the actual release version in the second command and compare its integrity with the workflow's `package-smoke.json`. Verify a clean installation separately. Once a public release exists, users can install it with:
+Use the actual release version in the second command and compare its integrity with the workflow's `package-smoke.json`. Verify a clean installation separately. Users can install the published package with:
 
 ```sh
 npm install --save-dev @usualui/lint

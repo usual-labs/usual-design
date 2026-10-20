@@ -14,7 +14,7 @@ Harassment, discriminatory abuse, threats, sexual harassment, stalking, imperson
 
 ## Reporting a concern
 
-**A confidential conduct-reporting contact has not been configured for this unreleased checkout.** Before opening public contributions, the repository owner must designate a monitored private contact and an alternate for reports involving that person, verify both routes, and replace this notice with those details.
+**A confidential conduct-reporting contact has not been configured for this early-stage project.** Before opening public contributions, the repository owner must designate a monitored private contact and an alternate for reports involving that person, verify both routes, and replace this notice with those details.
 
 Do not post sensitive reports or identifying information in a public issue, and do not use a security advisory to report a conduct matter. If a platform's reporting or blocking tools are available, you can use them for immediate protection; those tools are separate from the project's process.
 

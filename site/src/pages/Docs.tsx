@@ -1,7 +1,7 @@
 import { CodeBlock } from '../components/CodeBlock';
 
 const sections = [
-  ['start', 'Build from source'],
+  ['start', 'Install & initialize'],
   ['discover', 'Discover & decide'],
   ['repair', 'Repair & activate'],
   ['contract', 'The design contract'],
@@ -58,26 +58,24 @@ export function Docs() {
             to a dependable check.
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-muted">
-            This is the local source-build workflow. Public repository and package destinations will
-            be added after publication is approved.
+            Install @usualui/lint from npm and use your existing coding agent to turn project
+            decisions into a contract you can check.
           </p>
         </header>
         <section id="start" className="space-y-5">
-          <h2 className="text-2xl font-semibold tracking-tight">1. Build from source</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">1. Install and initialize</h2>
           <p className="leading-relaxed text-muted">
-            Use Node.js 22 or newer. In your local Usual Design source checkout, install the pinned
-            dependencies and build the CLI and bundled interfaces.
+            Use Node.js 22.12 or newer. From your React/Tailwind v4 project, create the draft
+            manifest with one command.
           </p>
-          <CodeBlock code={'npm ci\nnpm run build\nnode dist/cli.js --help'} />
+          <CodeBlock code={'npx @usualui/lint init --write'} />
           <p className="leading-relaxed text-muted">
-            Examples below run from the tool checkout and pass the target project explicitly. Use an
-            absolute path if you run the command elsewhere. Ordinary checks read source; they do not
-            run project code.
+            Omit --write to preview without changing files. The draft leaves all categories inactive
+            and never overwrites an existing manifest. Install the package locally for repeatable
+            checks and agent hooks; one-off npx use does not add it to your dependencies.
           </p>
           <CodeBlock
-            code={
-              'node dist/cli.js check --root /path/to/project\nnode dist/cli.js check --root /path/to/project --json'
-            }
+            code={'npm install --save-dev @usualui/lint\nnpx --no-install usual-design --help'}
           />
         </section>
         <section id="discover" className="space-y-5">
@@ -89,13 +87,13 @@ export function Docs() {
           </p>
           <CodeBlock
             code={
-              'node dist/cli.js init --root /path/to/project\nnode dist/cli.js init --root /path/to/project --write\nnode dist/cli.js audit --root /path/to/project --save\nnode dist/cli.js wizard --root /path/to/project --port 0'
+              'npx --no-install usual-design audit --save\nnpx --no-install usual-design wizard --port 0'
             }
           />
           <p className="leading-relaxed text-muted">
-            The first command prints a draft. Add <code>--write</code> to create the manifest. Open
-            the local wizard URL printed by the last command. The wizard does not open a browser
-            automatically.
+            The initial audit can exit 1 while policy decisions and findings remain unresolved. Open
+            the local URL printed by the wizard command. The wizard does not open a browser
+            automatically. Use the --root option to target a different directory.
           </p>
           <div className="rounded-panel border border-line bg-soft p-5">
             <h3 className="font-medium">Have no design system yet?</h3>
@@ -124,7 +122,7 @@ export function Docs() {
           </p>
           <CodeBlock
             code={
-              'node dist/cli.js audit --root /path/to/project --save\nnode dist/cli.js activate --root /path/to/project --categories colors,components --write\nnode dist/cli.js check --root /path/to/project'
+              'npx --no-install usual-design audit --save\nnpx --no-install usual-design activate --categories colors,components --write\nnpx --no-install usual-design check'
             }
           />
           <p className="leading-relaxed text-muted">
@@ -164,14 +162,13 @@ export function Docs() {
           <CodeBlock
             label="Preview integration setup"
             code={
-              'node dist/cli.js setup --root /path/to/project --host both --hooks\nnode dist/cli.js setup --root /path/to/project --host both --hooks --write'
+              'npx --no-install usual-design setup --host both --hooks\nnpx --no-install usual-design setup --host both --hooks --write'
             }
           />
           <p className="leading-relaxed text-muted">
-            Generated integrations expect the built package installed locally in the target project.
-            From that project, <code>npm install --save-dev /path/to/usual-design</code> can install
-            your source build. Review the resulting package and lockfile changes. Native hooks use
-            the installed CLI without downloading one.
+            Generated integrations require <code>@usualui/lint</code> installed as a local
+            development dependency. Review the resulting package and lockfile changes. Native hooks
+            use the installed CLI without downloading one.
           </p>
           <p className="leading-relaxed text-muted">
             A clean result exits 0. Policy or coverage failures exit 1. Configuration and

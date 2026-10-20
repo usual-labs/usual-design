@@ -4,16 +4,16 @@ This document describes the first-release target and interpretation of results. 
 
 ## Supported starting point
 
-| Area | Initial boundary |
-| --- | --- |
-| Runtime | Node.js 22.12 or newer, npm source builds. |
-| Application syntax | JavaScript, TypeScript, JSX, TSX; React and source-compatible Next.js layouts. |
-| Tailwind | Version 4. Detect older, missing, or ambiguous version metadata; never treat it as verified v4 support. |
-| Configuration | `usual.design.json` schema version 1; project-relative coverage and token paths. |
-| Tokens | CSS token declarations, including Tailwind v4 `@theme` custom properties. |
-| Rule types | Approved values; explicit semantic element/component/prop rules; native-to-shared-component rules. |
-| Model integration | Existing agent runs the workflow. The deterministic checker calls no model. |
-| Visual preview | Built-in specimens and source references; an existing preview may be linked. |
+| Area               | Initial boundary                                                                                        |
+| ------------------ | ------------------------------------------------------------------------------------------------------- |
+| Runtime            | Node.js 22.12 or newer, npm package and source builds.                                                  |
+| Application syntax | JavaScript, TypeScript, JSX, TSX; React and source-compatible Next.js layouts.                          |
+| Tailwind           | Version 4. Detect older, missing, or ambiguous version metadata; never treat it as verified v4 support. |
+| Configuration      | `usual.design.json` schema version 1; project-relative coverage and token paths.                        |
+| Tokens             | CSS token declarations, including Tailwind v4 `@theme` custom properties.                               |
+| Rule types         | Approved values; explicit semantic element/component/prop rules; native-to-shared-component rules.      |
+| Model integration  | Existing agent runs the workflow. The deterministic checker calls no model.                             |
+| Visual preview     | Built-in specimens and source references; an existing preview may be linked.                            |
 
 No browser, server render, screenshot, or runtime application inspection happens during a normal check. There is no assertion that configured rules prove beauty, usability, accessibility, or runtime behavior.
 
@@ -51,7 +51,7 @@ Commit hooks and working-tree checks are not equivalent to testing the Git index
 
 ## Known review gates
 
-The website’s visual direction is provisional. Public domain, repository/package publication, actual agent lifecycle behavior, visual/browser review, and external pilot adoption require their own recorded evidence. See the implementation handoff and [demonstration guide](demo.md).
+The website’s visual direction is provisional. The repository and `@usualui/lint@0.1.0` package are public. Website deployment, actual agent lifecycle behavior, visual/browser review, and external pilot adoption still require their own recorded evidence. See the implementation handoff and [demonstration guide](demo.md).
 
 ## Concrete static support
 
@@ -73,6 +73,6 @@ The visual inventory also reports observed ad-hoc class/declaration values when 
 
 ## Platform evidence
 
-Local implementation and packed-executable checks were run on macOS Darwin 25.5.0 arm64 with Node 22.23.2 and npm 10.9.8. POSIX shell quoting and temporary Git hooks were exercised there, including spaces and shell metacharacters in manifest paths. Linux CI configuration is prepared but has not run remotely. Windows shell/native hook behavior is unverified; this candidate does not claim tested Windows support.
+Local implementation and packed-executable checks were run on macOS Darwin 25.5.0 arm64 with Node 22.23.2 and npm 10.9.8. POSIX shell quoting and temporary Git hooks were exercised there, including spaces and shell metacharacters in manifest paths. Linux GitHub Actions checks and the publishing dry run passed for source revision `76da0d3`; the published archive matched that verified candidate. Windows shell/native hook behavior is unverified; this candidate does not claim tested Windows support.
 
 Diagnostic spans are zero-based, half-open UTF-16 offsets, matching JavaScript/parser indexing. Source context is bounded and may contain project source; review JSON before sharing it externally. Semantic IDs survive unrelated line shifts and distinguish repeated evidence by occurrence. Inserting/removing indistinguishable earlier occurrences can change associations, so IDs and old line numbers never replace a current snapshot check.

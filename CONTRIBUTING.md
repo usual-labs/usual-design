@@ -2,7 +2,7 @@
 
 Thanks for helping make design rules dependable. Contributions can be code, a small reproduction, clearer documentation, better diagnostics, or feedback on onboarding. You do not need to be a static-analysis expert to help.
 
-Usual Design is an early, unreleased project from Usual Labs. The canonical repository is [usual-labs/usual-design](https://github.com/usual-labs/usual-design). The workflow below describes contributions there; public contribution intake depends on completing the reporting setup described in [Security](SECURITY.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
+Usual Design is an early-stage open-source project from Usual Labs. The canonical repository is [usual-labs/usual-design](https://github.com/usual-labs/usual-design). The workflow below describes contributions there; public contribution intake depends on completing the reporting setup described in [Security](SECURITY.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Find the right starting point
 

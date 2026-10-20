@@ -2,7 +2,7 @@
 
 Start with [usage and the manifest](docs/usage.md), [supported analysis](docs/compatibility.md), and [agent setup](docs/integrations.md). For source checkout problems, see the [development guide](docs/development.md).
 
-This is an unreleased source checkout. The public tracker is [GitHub Issues](https://github.com/usual-labs/usual-design/issues). Use the forms described below for ordinary questions and bugs. Private reporting contacts are still being configured; no chat service, discussion forum, or support email is implied.
+The first release, `@usualui/lint@0.1.0`, is available on npm. The public tracker is [GitHub Issues](https://github.com/usual-labs/usual-design/issues). Use the forms described below for ordinary questions and bugs. Private reporting contacts are still being configured; no chat service, discussion forum, or support email is implied.
 
 ## Choose a report
 
