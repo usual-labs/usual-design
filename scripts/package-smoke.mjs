@@ -17,7 +17,10 @@ const [packed] = JSON.parse(
 for (const required of [
   'dist/cli.js',
   'schema/manifest.schema.json',
+  'schema/onboarding.schema.json',
   'skills/usual-design/SKILL.md',
+  'skills/usual-design-onboarding/SKILL.md',
+  'skills/usual-design-onboarding/references/proposal.md',
   'dist/wizard/index.html',
 ]) {
   assert.ok(
@@ -83,6 +86,33 @@ try {
   const initialized = JSON.parse(run('init --write', ['init', '--write', '--json']));
   assert.equal(initialized.written, true);
   assert.deepEqual(initialized.errors, []);
+  const guided = join(temp, 'guided');
+  await mkdir(join(guided, 'src'), { recursive: true });
+  await writeFile(join(guided, 'package.json'), '{"devDependencies":{"tailwindcss":"^4.1.0"}}');
+  await writeFile(
+    join(guided, 'src/App.tsx'),
+    'export const App = () => <a data-intent="primary" className="bg-blue-600 text-white rounded-xl">Start</a>;',
+  );
+  const guide = await readFile(
+    join(temp, 'node_modules/@usualui/lint/skills/usual-design-onboarding/references/proposal.md'),
+    'utf8',
+  );
+  await writeFile(join(guided, 'proposal.json'), guide.match(/```json\n([\s\S]*?)\n```/)[1]);
+  const guidedResult = JSON.parse(
+    run('guided preparation from installed skill', [
+      'onboard',
+      '--root',
+      guided,
+      '--proposal',
+      'proposal.json',
+      '--write',
+      '--json',
+    ]),
+  );
+  assert.equal(guidedResult.written, true);
+  assert.equal(guidedResult.decisions, 2);
+  await assert.rejects(readFile(join(guided, 'usual.design.json')));
+  assert.ok(await readFile(join(guided, guidedResult.path)));
   assert.equal(JSON.parse(run('validate', ['validate', '--json'])).valid, true);
   const audit = JSON.parse(run('draft audit --save', ['audit', '--save', '--json'], 1));
   assert.deepEqual(audit.errors, []);
@@ -116,9 +146,18 @@ try {
   for (const hostPath of [
     '.agents/skills/usual-design/SKILL.md',
     '.claude/skills/usual-design/SKILL.md',
+    '.agents/skills/usual-design-onboarding/SKILL.md',
+    '.claude/skills/usual-design-onboarding/SKILL.md',
   ]) {
     assert.match(await readFile(join(temp, hostPath), 'utf8'), /name: usual-design/);
   }
+  assert.equal(
+    await readFile(
+      join(temp, '.claude/skills/usual-design-onboarding/references/proposal.md'),
+      'utf8',
+    ),
+    guide,
+  );
   const repeated = JSON.parse(
     run('idempotent setup', ['setup', '--host', 'both', '--hooks', '--json']),
   );

@@ -2,31 +2,58 @@
 
 Usual Design turns the project’s design decisions into deterministic checks. It is intended for AI-heavy teams using React, JavaScript/TypeScript, and Tailwind v4. Read the [compatibility boundaries](compatibility.md) before treating a pass as evidence.
 
-## Install and initialize
+## Start with your existing agent
 
-Use Node.js **22.12 or newer**. From the React/Tailwind v4 project you want to check:
+Copy the [README onboarding prompt](../README.md#quick-start) into your agent.
+It installs `usual-design-onboarding` from `usual-labs/usual-design` through the
+Vercel Skills CLI, reads the installed skill, and prepares recommendations from
+your project. Node 22.20+ supports the current Skills installer; our CLI needs
+22.12+. Guided onboarding requires @usualui/lint 0.2.0+.
+
+The maintained wizard walks through project scope, colors, typography, spacing,
+shape, components, and review. Choices update a shared reference screen. Preserve
+existing names, states, themes, and meaningful variations; nearby colors need
+not be duplicates. Defer a whole category when its decisions are not ready.
+
+The agent writes a proposal following `schema/onboarding.schema.json`, with
+actual rule fragments and source evidence. The installed skill includes the
+[format and role guide](../skills/usual-design-onboarding/references/proposal.md).
+It runs these commands from your project:
 
 ```sh
-npx @usualui/lint init
-npx @usualui/lint init --write
-npm install --save-dev @usualui/lint
-npx --no-install usual-design audit --save
-npx --no-install usual-design wizard --port 0
+npm install --save-dev @usualui/lint@^0.2.0
+npx --no-install usual-design init --json
+npx --no-install usual-design onboard --proposal docs/usual-design/onboarding/proposal.json
+npx --no-install usual-design onboard --proposal docs/usual-design/onboarding/proposal.json --write
+npx --no-install usual-design wizard
 ```
 
-The first command previews a draft without writing files. The second creates `usual.design.json` and refuses to overwrite an existing manifest. The draft inventories evidence and leaves all categories inactive; observed values are not user-approved design policy. Review the result with your existing coding agent. An initial audit can exit `1` for unresolved findings or policy decisions.
+`onboard` validates without writes by default. `--write` saves a resumable proposal
+session, never policy. Open the printed local URL; the server does not auto-open
+a browser. Choices persist on Continue, Back, or Save progress. Final approval
+writes the minimal manifest with all categories inactive. A fresh audit then
+lets you select a repair batch and copy a prompt for your existing agent.
 
-`npx @usualui/lint` runs the package's single executable, `usual-design`. It does not install a project dependency; the `npm install --save-dev` step is needed for durable scripts and agent hooks. Keep the resulting package and lockfile changes in version control. To pin a one-off command, use `npx @usualui/lint@0.1.0 init --write`.
+`docs/usual-design/onboarding/session.json` holds recommendations and choices;
+previous preparations are archived under `history/`. Source and policy changes
+invalidate stale approval. Refresh evidence and rerun preparation after source
+changes. Existing active/nonempty contracts use the policy workshop for
+intentional changes; onboarding does not replace them. No application code or
+project component is executed for previews. Missing/unresolved preview values
+use labeled neutral defaults; this does not prove application accessibility.
 
-Commands below use the project-local executable. Run them from the target project; replace `/path/to/project` when an explicit root is shown. Source development setup is in the [development guide](development.md).
+## Manual discovery and existing contracts
 
-`wizard` prints a loopback URL. Open it manually. The interface uses token specimens and source references. It does not automatically import application components, execute project configuration, boot an app, or navigate it.
+`npx @usualui/lint init` prints a concise discovery summary without writing files.
+Add `--json` for the full `{manifest, inventory, errors, written}` report. The
+inventory is evidence, never part of the saved manifest. `init --write` saves a
+minimal inactive draft and refuses to overwrite an existing manifest. These
+manual commands remain available; guided onboarding is the recommended start.
 
-## Two onboarding journeys
-
-**Existing system:** ask the agent to identify token definitions, approved utility classes, shared components, and semantic conventions. It proposes the contract, shows source evidence, and asks about conflicts. Keep original token definitions as source files; reference them through `tokens` and configure the permitted names/classes explicitly.
-
-**Emerging system:** begin with the full inventory. The wizard shows observed ad-hoc class/style values, safe visual specimens, real source locations, and counts even when there are no CSS tokens. Use **Add to draft** to select intentional classes or literal values; this changes the unsaved policy only, until explicit review/save. Group recurring values by role, compare examples, and choose which patterns are intentional. Multiple radii, colors, or typography sizes can be valid. Record decisions and selected repair work before changing application code. The tool helps establish policy; it does not decide which visual direction is correct.
+One-off npx use does not install the local dependency required by scripts/hooks.
+Commands below use the project-local executable. Pass `--root /path/to/project`
+when targeting another project. An audit can exit 1 for unresolved findings or
+policy decisions. Source setup is in the [development guide](development.md).
 
 ## Project manifest
 
@@ -91,7 +118,7 @@ The JSON schema shipped in `schema/manifest.schema.json` is authoritative for ac
 
 Manifests use strict JSON: comments and trailing commas are rejected with a line and column. Version `1`, a nonempty `include`, and an explicit `active` array are required. An unsupported version needs a compatible tool release or a reviewed migration; changing only its version number does not migrate its fields.
 
-`init` starts with source patterns under `src`, `app`, `pages`, and `components`, no active categories, and empty allowed-value and rule lists. Omitted optional sections add no rules, exclusions, exceptions, or preview link. Validation never activates a category or approves observed values automatically.
+`init` starts with source patterns under `src`, `app`, `pages`, and `components`, no active categories, and no optional policy fields. Omitted optional sections add no rules, exclusions, exceptions, or preview link. Validation never activates a category or approves observed values automatically.
 
 Semantic native-element targets use tag names such as `button` or `usual-button`, not CSS selectors or React component names. A rule cannot require and forbid the same class, or require a prop value that contradicts its target filter. Rule IDs must be unique across rule types; exceptions must be unique by rule ID and file, even when their reasons differ. Preview links must be valid absolute HTTP or HTTPS URLs.
 

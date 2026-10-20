@@ -8,31 +8,36 @@ Install [@usualui/lint](https://www.npmjs.com/package/@usualui/lint) from npm. S
 
 ## Quick start
 
-Use Node.js **22.12 or newer**. From your React/Tailwind v4 project, create an initial manifest:
+Paste this prompt into your coding agent from your React/Tailwind v4 project:
 
-```sh
-npx @usualui/lint init --write
+```text
+Set up Usual Design in this project. Install the usual-design-onboarding skill
+from usual-labs/usual-design using `npx skills add`, selecting only this skill
+and my current agent at project scope. Read its installed SKILL.md and follow
+it now: inspect our design system, install the compatible @usualui/lint CLI,
+prepare recommendations, and open the guided wizard for my choices. Preserve
+existing policy and unrelated changes. Finish with the saved manifest and the
+wizard’s prompt for my approved repair batch.
 ```
 
-To preview the draft without writing files, run `npx @usualui/lint init` instead. `--write` creates `usual.design.json` with all categories inactive and refuses to overwrite an existing manifest. Use `--root /path/to/project` to target another directory. For a version-pinned invocation, use `npx @usualui/lint@0.1.0 init --write`.
+The agent installs the [onboarding skill](skills/usual-design-onboarding/SKILL.md)
+through [Vercel Skills](https://skills.sh), reads your code, and prepares the local
+wizard. You choose colors, typography, spacing, shape, and components while a
+reference UI updates live. Review the minimal `usual.design.json`, then select
+repairs and copy the generated prompt back to your agent.
 
-Install the tool locally for repeatable checks and agent hooks:
-
-```sh
-npm install --save-dev @usualui/lint
-npx --no-install usual-design audit --save
-npx --no-install usual-design wizard --port 0
-```
-
-The npm package is `@usualui/lint`; its executable is `usual-design`. The one-off `npx` command does not add the dependency to your project. An initial audit can exit `1` while policy decisions and findings remain unresolved.
-
-Open the local URL printed by the wizard command. Use your existing coding agent to review the draft contract and resolve selected findings. Activate only resolved categories:
+Use Node **22.20+** for the Skills installer (the Usual Design CLI itself supports
+22.12+). Guided onboarding requires **@usualui/lint 0.2.0+**. Direct skill install:
 
 ```sh
-npx --no-install usual-design activate --categories colors,components --write
-npx --no-install usual-design check
-npx --no-install usual-design check --json
+npx skills add usual-labs/usual-design --skill usual-design-onboarding
 ```
+
+Existing tokens keep their names. Discovery, recommendations, and deferred work
+stay in `docs/usual-design/`; the manifest contains only approved policy.
+The preview uses reference components, not your running application.
+
+For manual CLI setup and existing-policy editing, see the [usage guide](docs/usage.md).
 
 An inactive category is **entirely unchecked by lint**, including new violations. The full audit still reports it. A passing check establishes compliance with the configured active rules and supported analysis; it does not establish visual quality or runtime layout correctness.
 

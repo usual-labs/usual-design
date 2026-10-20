@@ -1,5 +1,10 @@
 # Usual Design implementation evidence
 
+Latest onboarding update (2026-10-20): see [agent-led onboarding 0.2](onboarding-0.2.md)
+for the dedicated skill, proposal compiler, guided preview, and current local
+proof. The phase evidence below is the original implementation snapshot; later
+repository/npm release receipts supersede its historical unpublished status.
+
 Updated: 2026-10-20. Candidate: `@usual/design-lint@0.1.0`; executable: `usual-design`.
 
 ## Current outcome

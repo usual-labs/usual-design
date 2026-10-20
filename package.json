@@ -1,6 +1,6 @@
 {
   "name": "@usualui/lint",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Project-owned design contracts and deterministic feedback for AI-native development.",
   "type": "module",
   "license": "MIT",

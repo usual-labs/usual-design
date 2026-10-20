@@ -1,8 +1,14 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 — 2026-10-20
 
-- Document npm installation and one-off `npx @usualui/lint init --write` onboarding.
+- Add a dedicated `usual-design-onboarding` skill, distributed through Vercel Skills from the public GitHub repository, with a researched role guide and validated proposal format.
+- Add `onboard --proposal ... [--write]` to prepare source-backed recommendations and resumable choices without writing policy.
+- Guide users through scope, colors, typography, spacing, shape, components, and review, with a live reference UI and explicit theme/preview limits.
+- Compile approved choices into a minimal version 1 manifest; keep evidence, recommendations, and deferred categories in separate project records.
+- Reject stale source/policy/session writes, protect existing contracts, and connect approved policy to the existing audit and selected-repair prompt.
+- Make README/site quick starts prompt-first. Keep `init` human output concise; full discovery remains available with `--json`.
+- Bundle both skills and supporting references in npm and project-local setup. The CLI command remains `usual-design`.
 
 ## 0.1.0 — 2026-10-20
 

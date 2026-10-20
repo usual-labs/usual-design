@@ -227,6 +227,18 @@ export async function planSetup(
     }
   }
   if (options.hooks && hosts.length) await add('.usual-design/hook.cjs', runner(configPath), true);
+  for (const file of ['SKILL.md', 'references/proposal.md']) {
+    const content = await readFile(
+      new URL(`../skills/usual-design-onboarding/${file}`, import.meta.url),
+      'utf8',
+    );
+    const destinations =
+      host === 'portable'
+        ? ['docs/usual-design/skills']
+        : hosts.map((client) => `${client === 'codex' ? '.agents' : '.claude'}/skills`);
+    for (const directory of destinations)
+      await add(`${directory}/usual-design-onboarding/${file}`, content, true);
+  }
   if (options.npmScript !== false) {
     try {
       const source = await readSetupFile(root, 'package.json');

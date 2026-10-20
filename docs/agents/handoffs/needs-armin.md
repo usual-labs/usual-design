@@ -1,5 +1,12 @@
 # Items for Armin when back
 
+Onboarding update (2026-10-20): the dedicated skill and guided wizard are
+implemented for 0.2.0. Local API, component, and packaged-install checks passed;
+the browser walkthrough remains pending under your no-browser-testing instruction.
+No new environment variables or migrations are required. Review the guided
+experience in a disposable React/Tailwind v4 project using the README prompt.
+Native-agent trust/lifecycle and website deployment remain separate gates.
+
 Release update (2026-10-20): `@usualui/lint@0.1.0` is published and verified through registry integrity and a clean install. This supersedes the npm login, scope-access, and first-publication blockers below. Trusted-publisher configuration and an actual OIDC publication remain pending.
 
 Repository update (2026-10-20): the user authorized pushing to `usual-labs/usual-design`, and the public GitHub repository has been created at https://github.com/usual-labs/usual-design. This supersedes the repository-creation and destination-pending notes below. npm publication, website deployment, confidential reporting contacts, and protection settings remain separate tasks.

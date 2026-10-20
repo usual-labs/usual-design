@@ -1,0 +1,2 @@
+export const onboardingPrompt =
+  'Set up Usual Design in this project. Install the usual-design-onboarding skill\nfrom usual-labs/usual-design using `npx skills add`, selecting only this skill\nand my current agent at project scope. Read its installed SKILL.md and follow\nit now: inspect our design system, install the compatible @usualui/lint CLI,\nprepare recommendations, and open the guided wizard for my choices. Preserve\nexisting policy and unrelated changes. Finish with the saved manifest and the\nwizard\u2019s prompt for my approved repair batch.';

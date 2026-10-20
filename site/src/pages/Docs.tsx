@@ -1,7 +1,8 @@
 import { CodeBlock } from '../components/CodeBlock';
+import { onboardingPrompt } from '../onboarding-prompt';
 
 const sections = [
-  ['start', 'Install & initialize'],
+  ['start', 'Start with your agent'],
   ['discover', 'Discover & decide'],
   ['repair', 'Repair & activate'],
   ['contract', 'The design contract'],
@@ -63,20 +64,16 @@ export function Docs() {
           </p>
         </header>
         <section id="start" className="space-y-5">
-          <h2 className="text-2xl font-semibold tracking-tight">1. Install and initialize</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">1. Paste this into your agent</h2>
           <p className="leading-relaxed text-muted">
-            Use Node.js 22.12 or newer. From your React/Tailwind v4 project, create the draft
-            manifest with one command.
+            Start in your React/Tailwind v4 project with Node 22.20 or newer. Your existing agent
+            installs the onboarding skill through Vercel Skills and the compatible CLI.
           </p>
-          <CodeBlock code={'npx @usualui/lint init --write'} />
+          <CodeBlock label="Onboarding prompt" code={onboardingPrompt} />
           <p className="leading-relaxed text-muted">
-            Omit --write to preview without changing files. The draft leaves all categories inactive
-            and never overwrites an existing manifest. Install the package locally for repeatable
-            checks and agent hooks; one-off npx use does not add it to your dependencies.
+            Guided onboarding requires @usualui/lint 0.2.0+. Skills are installed from
+            usual-labs/usual-design at project scope. Existing policy stays protected.
           </p>
-          <CodeBlock
-            code={'npm install --save-dev @usualui/lint\nnpx --no-install usual-design --help'}
-          />
         </section>
         <section id="discover" className="space-y-5">
           <h2 className="text-2xl font-semibold tracking-tight">2. Discover and decide</h2>
@@ -87,11 +84,11 @@ export function Docs() {
           </p>
           <CodeBlock
             code={
-              'npx --no-install usual-design audit --save\nnpx --no-install usual-design wizard --port 0'
+              'npx --no-install usual-design onboard --proposal docs/usual-design/onboarding/proposal.json --write\nnpx --no-install usual-design wizard'
             }
           />
           <p className="leading-relaxed text-muted">
-            The initial audit can exit 1 while policy decisions and findings remain unresolved. Open
+            Review colors, typography, spacing, shape, and components with a live reference UI. Open
             the local URL printed by the wizard command. The wizard does not open a browser
             automatically. Use the --root option to target a different directory.
           </p>
@@ -99,9 +96,9 @@ export function Docs() {
             <h3 className="font-medium">Have no design system yet?</h3>
             <p className="mt-2 leading-relaxed text-muted">
               Ask the agent to inventory existing values and recurring patterns first. Use the
-              wizard’s specimens and source references to choose the roles and values you intend to
-              keep. Several radii or colors can be intentional; consistency does not require one
-              value everywhere.
+              wizard’s recommendations, live previews, and source references to choose the roles and
+              values you intend to keep. Several radii or colors can be intentional; consistency
+              does not require one value everywhere.
             </p>
           </div>
         </section>

@@ -14,7 +14,7 @@ npx --no-install usual-design setup --host both --write
 
 Use `--host codex`, `--host claude`, or `--host portable` instead of `both` when appropriate. The preview reports exact file contents, conflicts, and native trust requirements. `--write` explicitly applies the reviewed project-local setup. Nothing is installed globally, and setup never downloads a second CLI version.
 
-If the project has no manifest yet, run `npx @usualui/lint init --write` first. One-off npx use does not install the dependency needed by native hooks. For source development, you can still install a verified local tarball instead of the registry version.
+If the project has no manifest yet, start with the [agent onboarding prompt](../README.md#quick-start). Setup includes both the ongoing repair skill and the dedicated onboarding skill with its proposal reference. One-off npx use does not install the dependency needed by native hooks. For source development, you can still install a verified local tarball instead of the registry version.
 
 Codex receives `.agents/skills/usual-design/SKILL.md` and a bounded `AGENTS.md` section. Claude Code receives `.claude/skills/usual-design/SKILL.md` and a bounded `CLAUDE.md` section. These project locations follow the [Codex customization documentation](https://learn.chatgpt.com/docs/customization/overview#skills) and [Claude Code skill documentation](https://code.claude.com/docs/en/skills), checked on 19 October 2026. Portable setup saves the shared skill in `docs/usual-design/SKILL.md` for manual use with another agent. The same maintained skill content is used by all hosts.
 

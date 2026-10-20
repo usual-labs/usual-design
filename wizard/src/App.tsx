@@ -5,6 +5,7 @@ import { Inventory } from './Inventory';
 import { addCandidateToDraft, compareAudits } from './model';
 import { PolicyReview } from './PolicyReview';
 import { RepairHandoff } from './RepairHandoff';
+import { GuidedOnboarding } from './GuidedOnboarding';
 import type { Audit, Category, Handoff, ObservedValue, ProjectState } from './types';
 
 export function App() {
@@ -16,6 +17,7 @@ export function App() {
   const [review, setReview] = useState(false);
   const [handoff, setHandoff] = useState<Handoff | null>(null);
   const [policyDraft, setPolicyDraft] = useState('');
+  const [workshop, setWorkshop] = useState(false);
   const errorRef = useRef<HTMLDivElement>(null);
 
   const refresh = useCallback(async () => {
@@ -181,12 +183,14 @@ export function App() {
             </code>
           </div>
         </section>
-        <nav className="step-nav" aria-label="Workshop sections">
-          <a href="#discover">01 Discover</a>
-          <a href="#policy">02 Policy</a>
-          <a href="#audit">03 Audit</a>
-          <a href="#handoff">04 Repair</a>
-        </nav>
+        {(!state?.onboarding || state.onboarding.saved || workshop) && (
+          <nav className="step-nav" aria-label="Workshop sections">
+            <a href="#discover">01 Discover</a>
+            <a href="#policy">02 Policy</a>
+            <a href="#audit">03 Audit</a>
+            <a href="#handoff">04 Repair</a>
+          </nav>
+        )}
         {error && (
           <div className="callout error" role="alert" ref={errorRef} tabIndex={-1}>
             <strong>The operation needs attention</strong>
@@ -216,8 +220,45 @@ export function App() {
         <div className="live-status" role="status" aria-live="polite">
           {pending ? <span className="working">{pending}…</span> : notice}
         </div>
-        {state ? (
+        {state?.onboarding && !state.onboarding.saved && !workshop ? (
+          <GuidedOnboarding
+            key={state.onboarding.sessionHash}
+            initial={state.onboarding}
+            manifestPath={state.manifestPath ?? 'usual.design.json'}
+            openWorkshop={() => setWorkshop(true)}
+            onSaved={async () => {
+              await request('audit', {});
+              await refresh();
+              setNotice(
+                'Manifest saved. Choose a repair batch below, then copy the prompt for your agent.',
+              );
+            }}
+          />
+        ) : state ? (
           <div aria-busy={!!pending}>
+            {state.onboarding?.saved && (
+              <section className="callout">
+                <strong>Your design contract is saved</strong>
+                <p>
+                  <code>{state.manifestPath}</code>
+                </p>
+                <p>
+                  Review the audit and choose the repairs your agent should make. Activate selected
+                  categories after their full audit is clean.
+                </p>
+                <a href="#audit">Choose repairs</a>
+              </section>
+            )}
+            {!state.manifest && !state.onboarding && (
+              <div className="callout">
+                <strong>Prepare guided onboarding with your agent</strong>
+                <p>
+                  Install the usual-design-onboarding skill from usual-labs/usual-design using the
+                  Vercel Skills CLI. Your agent will inspect the project and prepare recommendations
+                  for the guided wizard.
+                </p>
+              </div>
+            )}
             <div id="discover">
               <Inventory
                 inventory={state.audit?.inventory ?? state.inventory}

@@ -8,6 +8,12 @@ import { loadManifest, saveManifest, defaultManifest, parseManifest } from './co
 import { analyzeProject, runProject } from './project.js';
 import { activate, createPlan, saveAudit } from './records.js';
 import { hash, safePath } from './files.js';
+import {
+  onboardingState,
+  updateOnboarding,
+  previewOnboarding,
+  finishOnboarding,
+} from './onboarding.js';
 function json(res: ServerResponse, status: number, value: unknown) {
   res.writeHead(status, {
     'Content-Type': 'application/json',
@@ -86,11 +92,18 @@ export async function startWizard(root: string, configPath = 'usual.design.json'
               draft,
               inventory: report.inventory,
               audit: loaded ? report : null,
+              onboarding: await onboardingState(root, configPath),
               error: report.errors.length ? report.errors.join('\n') : undefined,
             });
           }
           if (req.method !== 'POST') return json(res, 405, { error: 'Unsupported method.' });
           const b = await body(req);
+          if (url.pathname === '/api/onboarding/choices')
+            return json(res, 200, await updateOnboarding(root, configPath, b));
+          if (url.pathname === '/api/onboarding/preview')
+            return json(res, 200, await previewOnboarding(root, configPath, b));
+          if (url.pathname === '/api/onboarding/finish')
+            return json(res, 200, await finishOnboarding(root, configPath, b));
           if (url.pathname === '/api/preview') {
             const loaded = await loadManifest(root, configPath).catch((error) => {
               if ((error as NodeJS.ErrnoException).code === 'ENOENT') return null;
