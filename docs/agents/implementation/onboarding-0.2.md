@@ -56,4 +56,31 @@ Activation still requires a fresh clean audit for the entire category.
 
 No browser test or native-agent lifecycle test was performed. No new environment
 variables, database, migrations, hosted services, or model credentials are needed.
-Release and remote-install evidence is recorded separately after publication.
+## Remote distribution evidence
+
+- Implementation commit: `c3ab664c7f59feb6e8b88923df12d5373852aa2d`, pushed to
+  `usual-labs/usual-design` on `main`.
+- [GitHub CI](https://github.com/usual-labs/usual-design/actions/runs/39433061684)
+  completed successfully for that exact commit.
+- Official `skills@1.7.4` remote `--list` discovered both skills. One genuine
+  isolated project-local installation with `--skill usual-design-onboarding
+  --skill usual-design -a codex -y` succeeded. Both installed SKILL.md files and
+  the proposal reference matched the repository byte-for-byte.
+- Both direct skills.sh pages returned HTTP 200, the correct titles, and actual
+  skill content:
+  [onboarding](https://skills.sh/usual-labs/usual-design/usual-design-onboarding),
+  [ongoing checks/repairs](https://skills.sh/usual-labs/usual-design/usual-design).
+  A general `skills find usual-design` search did not yet return our repository;
+  direct installation and page availability are verified separately from search.
+- The verified npm archive is
+  `.usual-design/artifacts/usualui-lint-0.2.0.tgz`, integrity
+  `sha512-Cm1iDSOSrHE0vNj2EpqeLsAyI6wBUN/EKTHuJfSFc52gKZ2J7YwjvDvNdE6gDZhYVjv6N8PuPsHj43hLqTPBrg==`.
+- npm publication was initiated from this archive and is waiting for fresh
+  account verification. The user has the verification link in chat. No 0.2.0
+  registry publication, registry installation, or OIDC provenance is claimed yet.
+  The last verified public version is 0.1.0, which lacks `onboard`.
+
+After verification, confirm publication outcome before retrying. Compare the
+registry integrity with the archive above, install 0.2.0 in a clean temporary
+project, and verify its `onboard` command and skill example. Keep that receipt
+separate from the already-passed packed-install proof.

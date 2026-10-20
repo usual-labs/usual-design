@@ -7,6 +7,12 @@ No new environment variables or migrations are required. Review the guided
 experience in a disposable React/Tailwind v4 project using the README prompt.
 Native-agent trust/lifecycle and website deployment remain separate gates.
 
+Release gate: both skills are live on skills.sh and verified through the official
+installer; implementation commit `c3ab664` passed GitHub CI. npm 0.2.0 publication
+is waiting for fresh account verification requested in chat. The last verified
+registry version is 0.1.0, which does not have the guided `onboard` command.
+Complete verification so the prepared CLI release can become available.
+
 Release update (2026-10-20): `@usualui/lint@0.1.0` is published and verified through registry integrity and a clean install. This supersedes the npm login, scope-access, and first-publication blockers below. Trusted-publisher configuration and an actual OIDC publication remain pending.
 
 Repository update (2026-10-20): the user authorized pushing to `usual-labs/usual-design`, and the public GitHub repository has been created at https://github.com/usual-labs/usual-design. This supersedes the repository-creation and destination-pending notes below. npm publication, website deployment, confidential reporting contacts, and protection settings remain separate tasks.
