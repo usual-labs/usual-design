@@ -27,8 +27,8 @@ Implementation has continued without waiting for these decisions. This file cont
 
 ## 4. Naming, ownership, and release destination
 
-- Local candidate: `@usual/design-lint@0.1.0`, executable `usual-design`.
-- Registry lookup did not find a public package at that name. That does not establish ownership/availability of the `@usual` scope.
+- Local candidate: `@usualui/lint@0.1.0`, executable `usual-design`.
+- Registry lookup did not find a public package at that name. That does not establish ownership/availability of the `@usualui` scope.
 - Confirm the public GitHub owner/repository, npm name/scope and authorized publishing account.
 - Confirm copyright attribution before public release. The current MIT file uses “Usual Design contributors”; no company identity has been invented.
 - No Git repository or remote was created, and nothing was committed/pushed/publicized by this implementation.
@@ -74,3 +74,9 @@ npm run dev:site
 ```
 
 Candidate archive and machine proof are generated in the ignored `.usual-design/artifacts/` folder by `npm run verify:package`. Engineering limitations that do not require a product decision are listed in the compatibility guide and progress record, rather than being passed to you as permission requests.
+
+## 8. npm publishing setup
+
+The package is now `@usualui/lint`, with the `usual-design` executable unchanged. See [publishing](../../publishing.md) for the exact first-release and trusted-publisher steps. GitHub Actions `publish.yml` defaults to verification only; publishing requires an explicit checked input.
+
+The current local npm session returns E401 and the registry has no public `@usualui/lint` version. Confirm/create the npm scope and authenticate the authorized owner for the first publication. Then configure npm trust for `usual-labs/usual-design`, workflow `publish.yml`, environment `npm`, and the Publish action when the next release is ready. Configure GitHub environment protections separately. No npm token, first publication, or scope ownership has been established by these files.

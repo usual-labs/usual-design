@@ -2,6 +2,7 @@
 
 ## 0.1.0 — Unreleased local candidate
 
+- Set the npm package name to `@usualui/lint`, retain the `usual-design` executable, and prepare explicit GitHub Actions publishing with OIDC and provenance.
 - Add a versioned project-owned manifest for approved values, explicit semantic rules, component replacement, and import restrictions.
 - Add read-only full audit and active-category enforcement with human/JSON diagnostics.
 - Analyze React JS/TS/JSX/TSX and Tailwind v4 source, finite class helpers, selected static CVA patterns, proven component aliases/reexports, contextual semantic classes, inline/CSS declarations, and explicit unknown coverage.

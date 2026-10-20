@@ -54,6 +54,7 @@ Contributions are welcome: reproducible bugs, clearer documentation, better diag
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security reporting and current release support](SECURITY.md)
 - [Maintainer review and release guide](docs/maintaining.md)
+- [Publishing @usualui/lint](docs/publishing.md)
 
 Private reporting setup and the public contribution intake process are still being finalized. The community documents state those limits explicitly.
 

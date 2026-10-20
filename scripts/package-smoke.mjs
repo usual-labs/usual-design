@@ -132,7 +132,7 @@ try {
   commands.push({ command: 'installed npm lint:design script', exit: npmCheck.status });
 
   const { startWizard } = await import(
-    pathToFileURL(join(temp, 'node_modules/@usual/design-lint/dist/server.js'))
+    pathToFileURL(join(temp, 'node_modules/@usualui/lint/dist/server.js'))
   );
   const wizard = await startWizard(temp);
   let bundledAssets = 0;

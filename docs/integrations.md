@@ -4,17 +4,17 @@ Every entry point invokes the same full-project `usual-design check`. Only activ
 
 ## Local setup
 
-The configured package name is `@usual/design-lint`; publication and registry availability are not established. For local acceptance, build and pack this checkout with `npm run build` and `npm pack`, then install the resulting tarball in the target project. Review proposed changes before writing:
+The configured package name is `@usualui/lint`; publication and registry availability are not established. For local acceptance, build and pack this checkout with `npm run build` and `npm pack`, then install the resulting tarball in the target project. Review proposed changes before writing:
 
 ```sh
-npm install --save-dev "/absolute/path/usual-design-lint-0.1.0.tgz"
+npm install --save-dev "/absolute/path/usualui-lint-0.1.0.tgz"
 npx --no-install usual-design setup --host both
 npx --no-install usual-design setup --host both --write
 ```
 
 Use `--host codex`, `--host claude`, or `--host portable` instead of `both` when appropriate. The preview reports exact file contents, conflicts, and native trust requirements. `--write` explicitly applies the reviewed project-local setup. Nothing is installed globally, and setup never downloads a second CLI version.
 
-Once a separately approved public release is available, `npm install --save-dev @usual/design-lint` replaces the tarball installation. Until then, documentation examples do not establish a published package.
+Once a separately approved public release is available, `npm install --save-dev @usualui/lint` replaces the tarball installation. Until then, documentation examples do not establish a published package.
 
 Codex receives `.agents/skills/usual-design/SKILL.md` and a bounded `AGENTS.md` section. Claude Code receives `.claude/skills/usual-design/SKILL.md` and a bounded `CLAUDE.md` section. These project locations follow the [Codex customization documentation](https://learn.chatgpt.com/docs/customization/overview#skills) and [Claude Code skill documentation](https://code.claude.com/docs/en/skills), checked on 19 October 2026. Portable setup saves the shared skill in `docs/usual-design/SKILL.md` for manual use with another agent. The same maintained skill content is used by all hosts.
 

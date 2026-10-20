@@ -152,9 +152,9 @@ test('native hooks are opt-in, preserve custom handlers, and remain idempotent',
 test('native runner finds the project from a nested cwd containing spaces', async () => {
   const root = await fixture();
   await applySetup(root, 'codex', { hooks: true });
-  await mkdir(path.join(root, 'node_modules/@usual/design-lint/dist'), { recursive: true });
+  await mkdir(path.join(root, 'node_modules/@usualui/lint/dist'), { recursive: true });
   await writeFile(
-    path.join(root, 'node_modules/@usual/design-lint/dist/cli.js'),
+    path.join(root, 'node_modules/@usualui/lint/dist/cli.js'),
     'process.stdout.write(JSON.stringify({argv:process.argv.slice(2),payload:require("fs").readFileSync(0,"utf8")}));',
   );
   const nested = path.join(root, 'src/nested path');
@@ -321,11 +321,11 @@ test('custom manifest paths remain safe data through npm, native hooks, and comm
   assert.ok(preview.notices.some((notice) => notice.includes('POSIX')));
   await applySetupPlan(preview);
   await mkdir(path.join(root, 'node_modules/.bin'), { recursive: true });
-  await mkdir(path.join(root, 'node_modules/@usual/design-lint/dist'), { recursive: true });
+  await mkdir(path.join(root, 'node_modules/@usualui/lint/dist'), { recursive: true });
   const fake =
     '#!/usr/bin/env node\nprocess.stdout.write(JSON.stringify(process.argv.slice(2)));\n';
   await writeFile(path.join(root, 'node_modules/.bin/usual-design'), fake, { mode: 0o755 });
-  await writeFile(path.join(root, 'node_modules/@usual/design-lint/dist/cli.js'), fake);
+  await writeFile(path.join(root, 'node_modules/@usualui/lint/dist/cli.js'), fake);
   const script = await exec('npm', ['run', '--silent', 'lint:design'], { cwd: root });
   assert.deepEqual(JSON.parse(script.stdout), ['check', '--config', configPath]);
   for (const host of ['codex', 'claude']) {

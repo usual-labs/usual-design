@@ -1,0 +1,89 @@
+name: Publish npm package
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact stable package version to verify (for example 0.1.0)
+        required: true
+        type: string
+      publish:
+        description: Publish publicly to npm (leave unchecked for verification only)
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install npm with trusted publishing support
+        run: npm install --global npm@11.5.1
+      - name: Validate requested package and version
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import { readFileSync } from 'node:fs';
+          const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+          const lock = JSON.parse(readFileSync('package-lock.json', 'utf8'));
+          assert.equal(pkg.name, '@usualui/lint');
+          assert.match(pkg.version, /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/);
+          assert.equal(pkg.version, process.env.RELEASE_VERSION);
+          assert.equal(lock.version, pkg.version);
+          assert.equal(lock.packages[''].version, pkg.version);
+          assert.equal(lock.name, pkg.name);
+          assert.equal(lock.packages[''].name, pkg.name);
+          assert.equal(pkg.publishConfig.access, 'public');
+          assert.equal(pkg.publishConfig.registry, 'https://registry.npmjs.org/');
+          JS
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run verify:package
+      - run: npm run audit:site
+      - name: Select the verified archive
+        id: archive
+        run: |
+          node --input-type=module <<'JS'
+          import { appendFileSync, readFileSync } from 'node:fs';
+          const proof = JSON.parse(readFileSync('.usual-design/artifacts/package-smoke.json', 'utf8'));
+          appendFileSync(process.env.GITHUB_OUTPUT, `path=${proof.artifact}\n`);
+          JS
+      - name: Check npm publication contents without publishing
+        env:
+          ARCHIVE: ${{ steps.archive.outputs.path }}
+        run: npm publish "$ARCHIVE" --dry-run --ignore-scripts --access public --registry https://registry.npmjs.org/
+      - name: Retain the verified archive and proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-candidate-${{ inputs.version }}-${{ github.sha }}
+          path: .usual-design/artifacts/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+      - name: Publish the verified archive with provenance
+        if: inputs.publish
+        env:
+          ARCHIVE: ${{ steps.archive.outputs.path }}
+        run: npm publish "$ARCHIVE" --ignore-scripts --access public --provenance --registry https://registry.npmjs.org/

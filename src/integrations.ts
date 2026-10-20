@@ -76,7 +76,7 @@ function packageScript(source: string, configPath: string): string {
 }
 
 const runner = (configPath: string) =>
-  `// Managed by Usual Design. Project-local dependencies only; no downloads.\nconst fs = require('node:fs');\nconst path = require('node:path');\nconst { spawnSync } = require('node:child_process');\nconst root = path.dirname(__dirname);\nconst host = process.argv.at(-1);\nif (!['codex', 'claude'].includes(host)) throw Error('Unsupported Usual Design hook host');\nconst own = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).name === '@usual/design-lint';\nconst cli = path.join(root, own ? 'dist/cli.js' : 'node_modules/@usual/design-lint/dist/cli.js');\nconst result = spawnSync(process.execPath, [cli, 'hook', '--root', root, '--host', host${configPath === 'usual.design.json' ? '' : `, '--config', ${JSON.stringify(configPath)}`}], { cwd: root, input: fs.readFileSync(0), encoding: 'utf8', timeout: 25000, maxBuffer: 1048576 });\nif (result.stdout) process.stdout.write(result.stdout);\nif (result.stderr) process.stderr.write(result.stderr);\nif (result.error) process.stderr.write('Usual Design checker unavailable: ' + result.error.message + '\\n');\nprocess.exit(result.status ?? 1);\n`;
+  `// Managed by Usual Design. Project-local dependencies only; no downloads.\nconst fs = require('node:fs');\nconst path = require('node:path');\nconst { spawnSync } = require('node:child_process');\nconst root = path.dirname(__dirname);\nconst host = process.argv.at(-1);\nif (!['codex', 'claude'].includes(host)) throw Error('Unsupported Usual Design hook host');\nconst own = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).name === '@usualui/lint';\nconst cli = path.join(root, own ? 'dist/cli.js' : 'node_modules/@usualui/lint/dist/cli.js');\nconst result = spawnSync(process.execPath, [cli, 'hook', '--root', root, '--host', host${configPath === 'usual.design.json' ? '' : `, '--config', ${JSON.stringify(configPath)}`}], { cwd: root, input: fs.readFileSync(0), encoding: 'utf8', timeout: 25000, maxBuffer: 1048576 });\nif (result.stdout) process.stdout.write(result.stdout);\nif (result.stderr) process.stderr.write(result.stderr);\nif (result.error) process.stderr.write('Usual Design checker unavailable: ' + result.error.message + '\\n');\nprocess.exit(result.status ?? 1);\n`;
 
 // Both clients run shell commands from the session cwd. Search ancestors so nested sessions work.
 const locateRunner = `let d=process.cwd();const f=require("node:fs"),p=require("node:path");while(!f.existsSync(p.join(d,".usual-design","hook.cjs"))){const n=p.dirname(d);if(n===d)throw Error("Usual Design hook runner not found");d=n}require(p.join(d,".usual-design","hook.cjs"))`;
@@ -233,7 +233,7 @@ export async function planSetup(
       if (source) await add('package.json', packageScript(source, configPath));
       else
         plan.notices.push(
-          'No package.json found. Install @usual/design-lint locally and add a lint:design script before using automatic integrations.',
+          'No package.json found. Install @usualui/lint locally and add a lint:design script before using automatic integrations.',
         );
     } catch (error) {
       plan.conflicts.push(String(error));

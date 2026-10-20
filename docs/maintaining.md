@@ -47,6 +47,8 @@ Do not run untrusted pull-request code with publishing credentials, privileged r
 
 ## Prepare a release
 
+The npm destination is `@usualui/lint`. Follow [publishing setup and the release workflow](publishing.md) for owner authentication, trusted publishing, and verification-only runs.
+
 Public publication and deployment require the repository owner's authorization. Review a concrete candidate first:
 
 1. Identify the exact source revision and intended version. Keep `package.json`, the lockfile version, CLI `--version`, and changelog consistent.
