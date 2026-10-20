@@ -1,0 +1,6 @@
+{
+ "version":1,"include":["src/**/*.{jsx,css}"],"active":["colors","typography","spacing","shape","components"],"tokens":["src/tokens.css"],
+ "allowed":{"colors":{"classes":["bg-ocean","text-snow"]},"typography":{"classes":["text-lg"]},"spacing":{"classes":["p-6"]},"shape":{"classes":["rounded-lg","rounded-full"]}},
+ "semantics":[{"id":"navigation-role","target":{"element":"nav"},"requireProps":{"aria-label":"Main"}}],
+ "components":[{"id":"use-control","element":"button","replacement":{"name":"Control","from":"./Control"},"ignore":["src/Control.jsx"]}]
+}

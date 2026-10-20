@@ -1,0 +1,22 @@
+name: Usage question
+description: Ask about a command, manifest rule, integration, or analysis boundary.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check SUPPORT.md, docs/usage.md, and docs/compatibility.md first.
+        Please keep follow-ups in one issue. Include only sanitized examples;
+        never include private source, credentials, or wizard session URLs/tokens.
+        For security or conduct concerns, follow SECURITY.md or CODE_OF_CONDUCT.md.
+  - type: textarea
+    id: question
+    attributes:
+      label: What are you trying to do?
+      description: Describe the desired outcome and what is unclear.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Relevant context
+      description: Include the version/revision, command, small manifest/source example, and documentation you have tried, if relevant.

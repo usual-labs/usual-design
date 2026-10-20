@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.tgz
+.usual-design/
+.env*
+!.env.example
+site/docs/usual-design/
+.DS_Store

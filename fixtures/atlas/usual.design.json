@@ -1,0 +1,6 @@
+{
+ "version":1,"include":["src/**/*.{tsx,css}"],"active":["colors","shape","components"],"tokens":["src/theme.css"],
+ "allowed":{"colors":{"classes":["bg-brand","text-paper"],"variables":["--color-brand","--color-paper"]},"typography":{"classes":["text-sm"]},"spacing":{"classes":["p-4"]},"shape":{"classes":["rounded-control"]}},
+ "semantics":[{"id":"action-color","target":{"element":"a","props":{"data-intent":"primary"}},"requireClasses":["bg-brand"]}],
+ "components":[{"id":"use-button","element":"button","replacement":{"name":"Button","from":"./Button"},"ignore":["src/Button.tsx"]}]
+}

@@ -1,0 +1,241 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Usual Design manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "include", "active"],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "include": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "ignore": {
+      "$ref": "#/definitions/strings"
+    },
+    "tokens": {
+      "$ref": "#/definitions/strings"
+    },
+    "active": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": ["colors", "typography", "spacing", "shape", "components"]
+      }
+    },
+    "preview": {
+      "type": "string",
+      "pattern": "^https?://"
+    },
+    "allowed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "colors": {
+          "$ref": "#/definitions/allowed"
+        },
+        "typography": {
+          "$ref": "#/definitions/allowed"
+        },
+        "spacing": {
+          "$ref": "#/definitions/allowed"
+        },
+        "shape": {
+          "$ref": "#/definitions/allowed"
+        }
+      }
+    },
+    "semantics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "target"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "element": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "component": {
+                "$ref": "#/definitions/component"
+              },
+              "props": {
+                "$ref": "#/definitions/props"
+              },
+              "classes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "type": "string", "minLength": 1 }
+              }
+            },
+            "oneOf": [
+              {
+                "required": ["element"]
+              },
+              {
+                "required": ["component"]
+              }
+            ]
+          },
+          "requireClasses": {
+            "$ref": "#/definitions/strings"
+          },
+          "forbidClasses": {
+            "$ref": "#/definitions/strings"
+          },
+          "requireProps": {
+            "$ref": "#/definitions/props"
+          },
+          "ignore": {
+            "$ref": "#/definitions/strings"
+          }
+        }
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "element", "replacement"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "element": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "replacement": {
+            "$ref": "#/definitions/component"
+          },
+          "ignore": {
+            "$ref": "#/definitions/strings"
+          }
+        }
+      }
+    },
+    "exceptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ruleId", "file", "reason"],
+        "properties": {
+          "ruleId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "file": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 3
+          }
+        }
+      }
+    },
+    "imports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "from"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "from": {
+            "type": "string",
+            "minLength": 1
+          },
+          "names": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "replacement": {
+            "$ref": "#/definitions/component"
+          },
+          "ignore": {
+            "$ref": "#/definitions/strings"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "strings": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "props": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "boolean"]
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "from"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "allowed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "classes": {
+          "$ref": "#/definitions/strings"
+        },
+        "variables": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^--[a-zA-Z0-9_-]+$"
+          },
+          "uniqueItems": true
+        },
+        "values": {
+          "$ref": "#/definitions/strings"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,2 @@
+@import "tailwindcss";
+@theme { --color-brand: #8d3b30; --color-paper: #fffaf0; --radius-control: 0.4rem; }

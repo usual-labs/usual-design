@@ -1,0 +1,211 @@
+{
+  "version": 1,
+  "include": [
+    "src/**/*.{js,jsx,ts,tsx}",
+    "src/**/*.css"
+  ],
+  "ignore": [],
+  "tokens": [
+    "src/style.css"
+  ],
+  "active": [],
+  "allowed": {
+    "colors": {
+      "classes": [
+        "bg-accent",
+        "bg-accent-dark",
+        "bg-code",
+        "bg-ink",
+        "bg-muted",
+        "bg-paper",
+        "bg-soft",
+        "bg-surface",
+        "border-ink",
+        "border-line",
+        "text-accent",
+        "text-code-ink",
+        "text-ink",
+        "text-muted",
+        "text-surface"
+      ],
+      "variables": [
+        "--color-accent",
+        "--color-accent-dark",
+        "--color-code",
+        "--color-code-ink",
+        "--color-ink",
+        "--color-line",
+        "--color-muted",
+        "--color-paper",
+        "--color-soft",
+        "--color-surface"
+      ],
+      "values": [
+        "var(--color-accent)",
+        "var(--color-ink)",
+        "var(--color-paper)",
+        "var(--color-surface)"
+      ]
+    },
+    "typography": {
+      "classes": [
+        "font-medium",
+        "font-mono",
+        "font-normal",
+        "font-semibold",
+        "leading-relaxed",
+        "leading-snug",
+        "text-2xl",
+        "text-center",
+        "text-display",
+        "text-lg",
+        "text-sm",
+        "text-title",
+        "text-xl",
+        "text-xs",
+        "tracking-tight",
+        "tracking-widest",
+        "underline",
+        "uppercase"
+      ],
+      "variables": [
+        "--font-mono",
+        "--font-sans",
+        "--text-display",
+        "--text-display--line-height",
+        "--text-title",
+        "--text-title--line-height"
+      ],
+      "values": [
+        "var(--font-sans)"
+      ]
+    },
+    "spacing": {
+      "classes": [
+        "absolute",
+        "block",
+        "col-span-1",
+        "col-span-3",
+        "flex",
+        "flex-wrap",
+        "gap-12",
+        "gap-3",
+        "gap-4",
+        "gap-5",
+        "gap-6",
+        "gap-8",
+        "grid",
+        "grid-cols-2",
+        "grid-cols-3",
+        "grid-cols-4",
+        "h-2",
+        "inline-block",
+        "inline-flex",
+        "items-center",
+        "items-end",
+        "justify-between",
+        "max-w-2xl",
+        "max-w-3xl",
+        "max-w-4xl",
+        "max-w-6xl",
+        "max-w-md",
+        "max-w-sm",
+        "mb-10",
+        "mb-2",
+        "mb-4",
+        "mb-6",
+        "mb-8",
+        "min-w-0",
+        "mt-1",
+        "mt-2",
+        "mt-20",
+        "mt-24",
+        "mt-3",
+        "mt-4",
+        "mt-5",
+        "mt-6",
+        "mt-8",
+        "mx-auto",
+        "p-4",
+        "p-5",
+        "p-6",
+        "p-8",
+        "pb-16",
+        "pb-20",
+        "pl-5",
+        "pl-8",
+        "pt-12",
+        "pt-16",
+        "pt-20",
+        "pt-5",
+        "px-4",
+        "px-5",
+        "px-6",
+        "py-16",
+        "py-2",
+        "py-3",
+        "py-6",
+        "py-8",
+        "space-y-16",
+        "space-y-3",
+        "space-y-4",
+        "space-y-5",
+        "space-y-6",
+        "sticky",
+        "top-8",
+        "w-2"
+      ],
+      "variables": [],
+      "values": [
+        "0"
+      ]
+    },
+    "shape": {
+      "classes": [
+        "border",
+        "border-b",
+        "border-l",
+        "border-t",
+        "border-y",
+        "opacity-50",
+        "rounded-full",
+        "rounded-panel"
+      ],
+      "variables": [
+        "--radius-panel"
+      ],
+      "values": [
+        "3px solid var(--color-accent)",
+        "4px"
+      ]
+    }
+  },
+  "semantics": [
+    {
+      "id": "primary-action",
+      "target": {
+        "element": "a",
+        "props": {
+          "data-intent": "primary"
+        }
+      },
+      "requireClasses": [
+        "bg-accent",
+        "text-surface"
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": "shared-button",
+      "element": "button",
+      "replacement": {
+        "name": "Button",
+        "from": "./components/Button"
+      },
+      "ignore": [
+        "src/components/Button.tsx"
+      ]
+    }
+  ]
+}

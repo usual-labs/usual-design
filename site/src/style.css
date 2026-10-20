@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-paper: #f5f2e9;
+  --color-surface: #fffdf7;
+  --color-ink: #25271f;
+  --color-muted: #606255;
+  --color-line: #d2d2c4;
+  --color-accent: #a53e2b;
+  --color-accent-dark: #853020;
+  --color-soft: #eae7dc;
+  --color-code: #20241c;
+  --color-code-ink: #ebeddb;
+  --font-sans: 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  --text-display: clamp(3rem, 7vw, 6.5rem);
+  --text-display--line-height: 0.99;
+  --text-title: clamp(2rem, 4vw, 3.5rem);
+  --text-title--line-height: 1.05;
+  --radius-panel: 0.375rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-surface);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  button,
+  a,
+  input {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button {
+    cursor: pointer;
+  }
+  a {
+    text-underline-offset: 0.2em;
+  }
+  pre {
+    tab-size: 2;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
