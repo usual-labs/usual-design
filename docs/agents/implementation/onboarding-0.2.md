@@ -75,12 +75,16 @@ variables, database, migrations, hosted services, or model credentials are neede
 - The verified npm archive is
   `.usual-design/artifacts/usualui-lint-0.2.0.tgz`, integrity
   `sha512-Cm1iDSOSrHE0vNj2EpqeLsAyI6wBUN/EKTHuJfSFc52gKZ2J7YwjvDvNdE6gDZhYVjv6N8PuPsHj43hLqTPBrg==`.
-- npm publication was initiated from this archive and is waiting for fresh
-  account verification. The user has the verification link in chat. No 0.2.0
-  registry publication, registry installation, or OIDC provenance is claimed yet.
-  The last verified public version is 0.1.0, which lacks `onboard`.
+- npm publication was initiated from this archive, but the account verification
+  session expired and the command exited without publishing. The earlier chat
+  verification link is no longer usable. A subsequent registry read confirmed
+  that the latest version is still 0.1.0 and 0.2.0 is absent. No 0.2.0 registry
+  publication, registry installation, or OIDC provenance is claimed.
+- The documentation receipt commit `242bf2d` also passed
+  [GitHub CI](https://github.com/usual-labs/usual-design/actions/runs/39433682795).
 
-After verification, confirm publication outcome before retrying. Compare the
+When the user is available, retry publication to request fresh verification.
+Confirm publication outcome before any further retry. Compare the
 registry integrity with the archive above, install 0.2.0 in a clean temporary
 project, and verify its `onboard` command and skill example. Keep that receipt
 separate from the already-passed packed-install proof.

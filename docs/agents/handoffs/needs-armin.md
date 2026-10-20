@@ -9,9 +9,10 @@ Native-agent trust/lifecycle and website deployment remain separate gates.
 
 Release gate: both skills are live on skills.sh and verified through the official
 installer; implementation commit `c3ab664` passed GitHub CI. npm 0.2.0 publication
-is waiting for fresh account verification requested in chat. The last verified
-registry version is 0.1.0, which does not have the guided `onboard` command.
-Complete verification so the prepared CLI release can become available.
+stopped when its account-verification session expired. The earlier chat link is
+no longer usable. A fresh registry read confirms 0.1.0 is still latest and 0.2.0
+is absent. When available, request fresh verification to publish the prepared
+archive; 0.1.0 does not have the guided `onboard` command.
 
 Release update (2026-10-20): `@usualui/lint@0.1.0` is published and verified through registry integrity and a clean install. This supersedes the npm login, scope-access, and first-publication blockers below. Trusted-publisher configuration and an actual OIDC publication remain pending.
 
