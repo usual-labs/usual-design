@@ -25,6 +25,12 @@ export interface OnboardingProposal {
   summary: string;
   scope: Pick<Manifest, 'include' | 'ignore' | 'tokens'>;
   notes?: string[];
+  /** Project-owned development page; never compiled into lint policy. */
+  showcase?: {
+    url: string;
+    title: string;
+    themes: ('light' | 'dark')[];
+  };
   decisions: {
     id: string;
     category: Category;

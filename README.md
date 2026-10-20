@@ -15,7 +15,8 @@ Set up Usual Design in this project. Install the usual-design-onboarding skill
 from usual-labs/usual-design using `npx skills add`, selecting only this skill
 and my current agent at project scope. Read its installed SKILL.md and follow
 it now: inspect our design system, install the compatible @usualui/lint CLI,
-prepare recommendations, and open the guided wizard for my choices. Preserve
+prepare recommendations and a showcase of our real components, fonts, and
+themes, then open the guided wizard for my choices. Preserve
 existing policy and unrelated changes. Finish with the saved manifest and the
 wizard’s prompt for my approved repair batch.
 ```
@@ -23,11 +24,11 @@ wizard’s prompt for my approved repair batch.
 The agent installs the [onboarding skill](skills/usual-design-onboarding/SKILL.md)
 through [Vercel Skills](https://skills.sh), reads your code, and prepares the local
 wizard. You choose colors, typography, spacing, shape, and components while a
-reference UI updates live. Review the minimal `usual.design.json`, then select
+project component showcase updates live. Review the minimal `usual.design.json`, then select
 repairs and copy the generated prompt back to your agent.
 
 Use Node **22.20+** for the Skills installer (the Usual Design CLI itself supports
-22.12+). Guided onboarding requires **@usualui/lint 0.2.0+**. Direct skill install:
+22.12+). Guided onboarding requires **@usualui/lint 0.3.0+**. Direct skill install:
 
 ```sh
 npx skills add usual-labs/usual-design --skill usual-design-onboarding
@@ -35,7 +36,10 @@ npx skills add usual-labs/usual-design --skill usual-design-onboarding
 
 Existing tokens keep their names. Discovery, recommendations, and deferred work
 stay in `docs/usual-design/`; the manifest contains only approved policy.
-The preview uses reference components, not your running application.
+The showcase runs in your project’s development server. Older proposals without
+a showcase use an explicitly labeled reference sheet. Project showcases require
+@usualui/lint 0.3.0 or later; see the
+[showcase setup guide](skills/usual-design-onboarding/references/showcase.md).
 
 For manual CLI setup and existing-policy editing, see the [usage guide](docs/usage.md).
 
@@ -50,7 +54,7 @@ An inactive category is **entirely unchecked by lint**, including new violations
 
 Source checkouts also contain the website and visual proposal in `site/`, plus the ordered implementation plan in `docs/agents/plans/init/`.
 
-The normal checker reads source without executing it, requires no model API key, and adds no telemetry. Your chosen coding agent operates under its own settings. The local wizard renders specimens and source references, rather than importing arbitrary project components.
+The normal checker reads source without executing it, requires no model API key, and adds no telemetry. Your chosen coding agent operates under its own settings. The local wizard embeds a separate project-owned development showcase. The checker and wizard server never import project components; those execute in the project’s own runtime.
 
 ## Develop
 

@@ -4,6 +4,7 @@ import { parseManifest } from './config.js';
 import { classCategory } from './classes.js';
 import { validateRelative } from './files.js';
 import { categories } from './types.js';
+import { showcaseUrl } from './showcase-protocol.js';
 import {
   compileChoices,
   previewSlots,
@@ -27,6 +28,7 @@ export function parseProposal(input: unknown): OnboardingProposal {
       `Invalid onboarding proposal: ${validate.errors?.map((e) => `${e.instancePath} ${e.message}`).join('; ')}`,
     );
   const proposal = structuredClone(input as OnboardingProposal);
+  if (proposal.showcase) showcaseUrl(proposal.showcase.url);
   parseManifest({ version: 1, active: [], ...proposal.scope });
   const ids = new Set<string>();
   const slots = new Set<string>();

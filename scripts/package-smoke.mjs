@@ -16,11 +16,14 @@ const [packed] = JSON.parse(
 );
 for (const required of [
   'dist/cli.js',
+  'dist/showcase.js',
+  'dist/showcase.d.ts',
   'schema/manifest.schema.json',
   'schema/onboarding.schema.json',
   'skills/usual-design/SKILL.md',
   'skills/usual-design-onboarding/SKILL.md',
   'skills/usual-design-onboarding/references/proposal.md',
+  'skills/usual-design-onboarding/references/showcase.md',
   'dist/wizard/index.html',
 ]) {
   assert.ok(
@@ -158,6 +161,13 @@ try {
     ),
     guide,
   );
+  assert.match(
+    await readFile(
+      join(temp, '.claude/skills/usual-design-onboarding/references/showcase.md'),
+      'utf8',
+    ),
+    /connectShowcase/,
+  );
   const repeated = JSON.parse(
     run('idempotent setup', ['setup', '--host', 'both', '--hooks', '--json']),
   );
@@ -188,6 +198,17 @@ try {
       const response = await fetch(new URL(asset, wizard.origin));
       assert.ok(response.ok, `Bundled asset unavailable: ${asset}`);
       assert.ok((await response.text()).length > 0);
+      if (asset.endsWith('.css')) {
+        const css = await (await fetch(new URL(asset, wizard.origin))).text();
+        const fonts = [...css.matchAll(/url\(["']?([^()"']+\.woff2)["']?\)/g)];
+        assert.ok(fonts.length, 'Bundled Manrope font missing');
+        for (const [, font] of fonts) {
+          const response = await fetch(new URL(font, new URL(asset, wizard.origin)));
+          assert.ok(response.ok, `Bundled font unavailable: ${font}`);
+          assert.equal(response.headers.get('content-type'), 'font/woff2');
+          assert.ok((await response.arrayBuffer()).byteLength > 1000);
+        }
+      }
       bundledAssets += 1;
     }
     const state = await fetch(wizard.origin + '/api/state', {

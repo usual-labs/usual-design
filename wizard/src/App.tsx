@@ -149,40 +149,25 @@ export function App() {
     state?.existingPreview ??
     (typeof state?.manifest?.preview === 'string' ? state.manifest.preview : undefined);
 
+  const guided = !!state?.onboarding && !state.onboarding.saved && !workshop;
+
   return (
-    <>
+    <div className={guided ? 'app-shell guided-shell' : 'app-shell'}>
       <a className="skip-link" href="#main">
-        Skip to project workshop
+        Skip to design setup
       </a>
       <header className="site-header">
         <a className="wordmark" href="#main" aria-label="Usual Design workshop">
           <span className="brand-mark" aria-hidden="true">
-            u.
+            u<span>.</span>
           </span>
           usual<span className="wordmark-sub">design</span>
         </a>
-        <span className="local-badge">Local project workshop</span>
+        <span className="project-name" title={state?.projectRoot}>
+          {state?.projectRoot?.split('/').pop() ?? 'Local project'}
+        </span>
       </header>
-      <main id="main">
-        <section className="intro">
-          <p className="eyebrow">A system you can keep</p>
-          <h1>
-            Your design.
-            <br />
-            <span>Made explicit.</span>
-          </h1>
-          <p className="intro-copy">
-            Understand what exists, decide what belongs, and give your coding agent a reliable
-            feedback loop.
-          </p>
-          <div className="project-label">
-            <span>Selected project</span>
-            <code>
-              {state?.projectRoot ??
-                (pending ? 'Opening local project…' : 'Project served by this local session')}
-            </code>
-          </div>
-        </section>
+      <main id="main" tabIndex={-1} className={guided ? 'guided-main' : 'workshop-main'}>
         {(!state?.onboarding || state.onboarding.saved || workshop) && (
           <nav className="step-nav" aria-label="Workshop sections">
             <a href="#discover">01 Discover</a>
@@ -314,11 +299,13 @@ export function App() {
             </div>
           )
         )}
-        <footer>
-          <span>Usual Labs · Intentional software.</span>
-          <span>Local workflow · No project code is executed for previews.</span>
-        </footer>
+        {!guided && (
+          <footer>
+            <span>Usual Labs · Intentional software.</span>
+            <span>Local workflow · Project showcase runs in a separate development server.</span>
+          </footer>
+        )}
       </main>
-    </>
+    </div>
   );
 }

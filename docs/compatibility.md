@@ -13,7 +13,7 @@ This document describes the first-release target and interpretation of results. 
 | Tokens             | CSS token declarations, including Tailwind v4 `@theme` custom properties.                               |
 | Rule types         | Approved values; explicit semantic element/component/prop rules; native-to-shared-component rules.      |
 | Model integration  | Existing agent runs the workflow. The deterministic checker calls no model.                             |
-| Visual preview     | Built-in specimens and source references; an existing preview may be linked.                            |
+| Visual preview     | Project-owned loopback showcase with real components/themes (0.3.0+); labeled reference sheet for older proposals.                            |
 
 No browser, server render, screenshot, or runtime application inspection happens during a normal check. There is no assertion that configured rules prove beauty, usability, accessibility, or runtime behavior.
 

@@ -2,7 +2,7 @@
 
 This guide keeps review, community care, and releases consistent for a small project. It does not grant repository access or publishing authority. Repository owners designate maintainers and retain responsibility for those permissions.
 
-Contributors should start with [CONTRIBUTING.md](../CONTRIBUTING.md). The source repository is [usual-labs/usual-design](https://github.com/usual-labs/usual-design), with `@usualui/lint@0.1.0` published on npm; the preparation below is not evidence that external settings are enabled.
+Contributors should start with [CONTRIBUTING.md](../CONTRIBUTING.md). The source repository is [usual-labs/usual-design](https://github.com/usual-labs/usual-design), with `@usualui/lint` published on npm; the preparation below is not evidence that external settings are enabled.
 
 ## Before opening public contributions
 

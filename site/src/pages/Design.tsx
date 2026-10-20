@@ -148,8 +148,9 @@ export function Design() {
             is required. Your existing agent handles analysis and repairs under its own settings.
           </p>
           <p className="mt-4 leading-relaxed text-muted">
-            The wizard uses token specimens and source references. It does not import and execute
-            arbitrary application components.
+            The wizard can embed a project-owned development showcase with your real components and
+            fonts. The checker never imports application code. Project showcases require
+            @usualui/lint 0.3.0 or later.
           </p>
           <a
             href="/design/docs/"

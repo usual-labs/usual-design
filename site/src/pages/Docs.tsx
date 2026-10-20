@@ -71,7 +71,7 @@ export function Docs() {
           </p>
           <CodeBlock label="Onboarding prompt" code={onboardingPrompt} />
           <p className="leading-relaxed text-muted">
-            Guided onboarding requires @usualui/lint 0.2.0+. Skills are installed from
+            This onboarding workflow requires @usualui/lint 0.3.0+. Skills are installed from
             usual-labs/usual-design at project scope. Existing policy stays protected.
           </p>
         </section>
@@ -88,9 +88,9 @@ export function Docs() {
             }
           />
           <p className="leading-relaxed text-muted">
-            Review colors, typography, spacing, shape, and components with a live reference UI. Open
-            the local URL printed by the wizard command. The wizard does not open a browser
-            automatically. Use the --root option to target a different directory.
+            Review colors, typography, spacing, shape, and components beside a live design-system
+            sheet. Open the local URL printed by the wizard command. The wizard does not open a
+            browser automatically. Use the --root option to target a different directory.
           </p>
           <div className="rounded-panel border border-line bg-soft p-5">
             <h3 className="font-medium">Have no design system yet?</h3>
@@ -195,8 +195,9 @@ export function Docs() {
               path is reported; the tool does not silently claim visual coverage.
             </li>
             <li>
-              The wizard renders token specimens and source references. It does not automatically
-              execute imported project components, start your application, or navigate it.
+              Version 0.3.0 supports project-owned showcases using actual components, fonts, and
+              themes. Your onboarding agent prepares the page and starts its separate local server.
+              Older proposals use a labeled reference sheet.
             </li>
             <li>
               The checker requires no account, hosted model, or telemetry. Your chosen agent has its

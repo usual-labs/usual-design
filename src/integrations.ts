@@ -227,7 +227,7 @@ export async function planSetup(
     }
   }
   if (options.hooks && hosts.length) await add('.usual-design/hook.cjs', runner(configPath), true);
-  for (const file of ['SKILL.md', 'references/proposal.md']) {
+  for (const file of ['SKILL.md', 'references/proposal.md', 'references/showcase.md']) {
     const content = await readFile(
       new URL(`../skills/usual-design-onboarding/${file}`, import.meta.url),
       'utf8',

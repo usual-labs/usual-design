@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 — 2026-10-20
+
+- Rebuild the wizard around Manrope, white surfaces, square neutral panels, consistent spacing, and a full-screen control rail / preview layout. Give Usual its own restrained iris accent, lighter dividers, numbered navigation, and outlined wordmark.
+- Add project-owned showcases that render actual components, fonts, type scales, and themes in the project's development server. A bounded browser bridge applies selected decisions without changing the lint manifest.
+- Add an onboarding showcase guide and coverage checklist, plus connection failures, reload, and theme controls. Older proposals retain a labeled, expanded reference sheet.
+
 ## 0.2.0 — 2026-10-20
 
 - Add a dedicated `usual-design-onboarding` skill, distributed through Vercel Skills from the public GitHub repository, with a researched role guide and validated proposal format.

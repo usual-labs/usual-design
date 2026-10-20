@@ -139,168 +139,10 @@
                   "additionalProperties": false,
                   "properties": {
                     "light": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "primary": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "onPrimary": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "surface": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "onSurface": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "muted": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "border": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "focus": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "bodySize": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "headingSize": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "lineHeight": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "fontFamily": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "gap": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "padding": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "controlRadius": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "cardRadius": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        }
-                      },
-                      "required": []
+                      "$ref": "#/definitions/previewValues"
                     },
                     "dark": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "primary": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "onPrimary": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "surface": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "onSurface": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "muted": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "border": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "focus": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "bodySize": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "headingSize": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "lineHeight": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "fontFamily": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "gap": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "padding": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "controlRadius": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        },
-                        "cardRadius": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 160
-                        }
-                      },
-                      "required": []
+                      "$ref": "#/definitions/previewValues"
                     }
                   },
                   "required": []
@@ -316,7 +158,117 @@
       },
       "minItems": 1,
       "maxItems": 60
+    },
+    "showcase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "title", "themes"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "themes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["light", "dark"]
+          }
+        }
+      }
     }
   },
-  "required": ["version", "title", "summary", "scope", "decisions"]
+  "required": ["version", "title", "summary", "scope", "decisions"],
+  "definitions": {
+    "previewValues": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "primary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "onPrimary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "surface": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "onSurface": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "muted": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "border": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "focus": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "bodySize": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "headingSize": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "lineHeight": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "fontFamily": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "gap": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "padding": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "controlRadius": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "cardRadius": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      },
+      "required": []
+    }
+  }
 }

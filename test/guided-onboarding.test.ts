@@ -330,3 +330,39 @@ test('guided API journey reaches saved minimal policy, selected repair prompt, a
     'An intentional later policy edit must not restart completed onboarding.',
   );
 });
+
+test('project showcase is proposal-only and CSP permits only its separate loopback origin', async (t) => {
+  const { root, proposal } = await project(t);
+  proposal.showcase = {
+    url: 'http://127.0.0.1:5173/__usual/showcase',
+    title: 'Project components',
+    themes: ['light', 'dark'],
+  };
+  const parsed = parseProposal(proposal);
+  assert.equal(parsed.showcase?.url, proposal.showcase.url);
+  assert.equal('showcase' in compileChoices(parsed, recommendedChoices(parsed)), false);
+  assert.throws(() =>
+    parseProposal({ ...proposal, showcase: { ...proposal.showcase, themes: ['dark', 'dark'] } }),
+  );
+  assert.throws(
+    () =>
+      parseProposal({
+        ...proposal,
+        showcase: { ...proposal.showcase, url: 'https://remote.example/app' },
+      }),
+    /loopback/,
+  );
+  await writeFile(join(root, 'proposal.json'), JSON.stringify(proposal));
+  await prepareOnboarding(root, 'proposal.json', 'usual.design.json', true);
+  const wizard = await startWizard(root);
+  t.after(() => new Promise<void>((resolve) => wizard.server.close(() => resolve())));
+  const response = await fetch(wizard.origin + '/api/state', {
+    headers: { 'x-usual-token': wizard.token },
+  });
+  assert.equal(response.status, 200);
+  const csp = response.headers.get('content-security-policy')!;
+  assert.match(csp, /frame-src http:\/\/127.0.0.1:5173;/);
+  assert.match(csp, /font-src 'self';/);
+  assert.match(csp, /frame-ancestors 'none'/);
+  assert.equal((await fetch(wizard.origin + '/api/state')).status, 403);
+});

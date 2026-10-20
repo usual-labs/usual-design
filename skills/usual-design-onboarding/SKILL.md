@@ -8,7 +8,8 @@ license: MIT
 
 Turn the project's existing design intent into a small, enforceable contract.
 Use the user's current agent and a maintained local wizard. Do not generate a
-new wizard application or rewrite application UI during onboarding.
+new wizard application or rewrite application UI during onboarding. Prepare an
+isolated project showcase using its real components and fonts.
 
 ## 1. Prepare the project
 
@@ -17,9 +18,9 @@ token stylesheets, shared components, themes, and `docs/usual-design/` records.
 Preserve unrelated work. An existing active or nonempty contract belongs in the
 policy workshop; review intentional changes rather than replacing it.
 
-Install `@usualui/lint@^0.2.0` as a project development dependency using its package
+Install `@usualui/lint@^0.3.0` as a project development dependency using its package
 manager. Check `./node_modules/.bin/usual-design --version` and `--help`; this
-workflow requires `onboard` (0.2.0+). Do not substitute an older command when
+workflow requires `onboard` and the project showcase bridge (0.3.0+). Do not substitute an older command when
 the release is unavailable. The CLI needs Node 22.12+; the current Vercel Skills
 installer needs Node 22.20+. Native hooks require the project-local dependency.
 
@@ -47,7 +48,22 @@ while silently approving all other observed colors. Each option must contain
 real enforceable rule fragments. Scope exclusions require an explained reason.
 Unresolved design intent belongs in a deferred category, not a broad allowlist.
 
-## 3. Open guided review
+## 3. Build the project showcase
+
+Read [the showcase guide](references/showcase.md). Inventory every shared UI
+component, variant/state, type role, theme, and spacing/shape token. Prepare a
+full design-system sheet in a development-only project entry using the existing
+components, font loader, styles, and theme provider. Use fixture data and local
+actions. Do not substitute generic components or a mini-dashboard.
+
+Connect every decision to its actual CSS variables, complete type scale, or
+component props with the browser bridge. Deferral restores original project
+values. Keep showcase metadata and the coverage table out of the manifest.
+Start its loopback development server and add `showcase` to the proposal.
+Complete source changes before preparing the onboarding snapshot. Keep this
+process running during review; do not leave the user to wire it up manually.
+
+## 4. Open guided review
 
 Run:
 
@@ -63,9 +79,10 @@ printed local session URL, or open it with their agent's supported UI tool.
 Keep that process running while they review. Do not click approval controls on
 their behalf.
 
-The wizard walks through scope, five categories, and review. Choices update a
-reference UI; it does not render the application. Unsupported preview values
-are marked unavailable. The user can defer entire categories. Final approval
+The full-screen wizard uses a compact left control rail and a large project
+showcase on the right. Choices update actual components and theme inside the
+project dev server. Check the connection status; failed updates stay visible.
+Only older proposals without a showcase use the labeled reference sheet. The user can defer entire categories. Final approval
 saves `usual.design.json` with every category inactive; it is not a claim that
 repairs or enforcement are complete.
 
@@ -73,7 +90,7 @@ If sources changed, refresh source evidence and rerun preparation. Previous
 sessions are retained in `docs/usual-design/onboarding/history/`. If policy
 changed, inspect it in the existing policy workshop instead of overwriting it.
 
-## 4. Finish the handoff
+## 5. Finish the handoff
 
 After saving, the wizard shows the actual manifest path, fresh audit groups,
 and selected-repair approval. The user chooses a batch; the generated prompt

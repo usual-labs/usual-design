@@ -5,8 +5,9 @@
   margin: 22px 0;
 }
 .token-card {
-  border: 1px solid var(--line);
-  border-radius: 7px;
+  border: 0;
+  background: var(--paper);
+  border-radius: 0;
   padding: 12px;
   min-width: 0;
 }
@@ -20,7 +21,7 @@
   font-size: 10px;
 }
 .token-value {
-  color: #596451;
+  color: var(--muted);
   display: block;
   font-size: 11px;
 }
@@ -42,8 +43,9 @@
   margin-top: 18px;
 }
 .component-card {
-  border: 1px solid var(--line);
-  border-radius: 6px;
+  border: 0;
+  background: var(--paper);
+  border-radius: 0;
   padding: 16px;
   min-width: 0;
 }
@@ -72,15 +74,15 @@
   align-items: center;
   flex-direction: column;
   gap: 10px;
-  background: #f0f1e8;
+  background: var(--paper);
   border-radius: 4px;
   overflow: hidden;
 }
 .specimen-object {
   width: 70px;
   height: 50px;
-  border: 1px solid #b9c6ac;
-  background: #e3e9d8;
+  border: 1px solid var(--line-strong);
+  background: var(--selected);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,7 +98,7 @@
   font-size: 8px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #5e6c53;
+  color: var(--muted);
 }
 .code-editor {
   min-height: 330px;
@@ -105,9 +107,10 @@
   tab-size: 2;
 }
 .policy-review {
-  background: #f5f6ed;
-  border: 1px solid var(--line);
-  border-radius: 7px;
+  background: var(--paper);
+  border: 0;
+  background: var(--paper);
+  border-radius: 0;
   padding: 20px;
   margin-top: 20px;
 }
@@ -120,10 +123,10 @@
   gap: 12px;
 }
 .draft-impact {
-  border: 1px dashed #c8cdbd;
-  background: #f6f5ed;
+  border: 1px dashed var(--line-strong);
+  background: var(--paper);
   padding: 20px;
-  border-radius: 7px;
+  border-radius: 0;
   margin-top: 22px;
 }
 .draft-finding-list {
@@ -152,7 +155,7 @@
 .policy-fieldset {
   padding: 16px;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 0;
 }
 .policy-fieldset legend {
   font-size: 15px;
@@ -177,7 +180,7 @@
   gap: 9px;
   padding: 8px 0;
   align-items: center;
-  border-bottom: 1px solid #e8e9df;
+  border-bottom: 1px solid var(--line);
   cursor: pointer;
 }
 .variable-choice > span:last-child {
@@ -186,7 +189,7 @@
 .variable-choice small {
   display: block;
   font-size: 10px;
-  color: #56614c;
+  color: var(--muted);
   overflow-wrap: anywhere;
   margin-top: 3px;
 }
@@ -196,8 +199,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e7ecd9;
-  border: 1px solid #b9c6ac;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
   flex-shrink: 0;
   font-size: 10px;
 }
@@ -206,15 +209,15 @@
   flex-wrap: wrap;
   gap: 8px 18px;
   padding: 14px;
-  border: 1px solid #cdd3bf;
-  border-radius: 5px;
-  background: #f0f3e7;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--paper);
   margin: 20px 0;
   font-size: 12px;
   line-height: 1.6;
 }
 .coverage-banner span {
-  color: #53614b;
+  color: var(--muted);
 }
 .audit-toolbar {
   display: flex;
@@ -236,8 +239,9 @@
   margin-top: 20px;
 }
 .audit-group {
-  border: 1px solid var(--line);
-  border-radius: 7px;
+  border: 0;
+  background: var(--paper);
+  border-radius: 0;
   padding: 20px;
 }
 .group-heading {
@@ -248,7 +252,7 @@
 }
 .group-heading p {
   font-size: 11px;
-  color: #596451;
+  color: var(--muted);
   margin: 8px 0 0;
 }
 .group-controls {
@@ -273,7 +277,7 @@
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  border-top: 1px solid #e2e5d9;
+  border-top: 1px solid var(--line);
   padding: 18px 0;
 }
 .finding > input {
@@ -287,7 +291,7 @@
   flex-shrink: 0;
   background: #e8e9f2;
   color: #4a507a;
-  border-radius: 50%;
+  border-radius: 0;
   margin: 3px 3px 0;
   font-size: 11px;
   font-weight: 700;
@@ -305,7 +309,7 @@
 }
 .finding-heading > code {
   font-size: 10px;
-  color: #596451;
+  color: var(--muted);
 }
 .finding p {
   font-size: 12px;
@@ -339,11 +343,11 @@
   position: sticky;
   bottom: 12px;
   z-index: 2;
-  border: 1px solid #c5cdb6;
-  background: #f2f4e9;
-  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 0;
   padding: 14px;
-  box-shadow: 0 4px 18px #25381d12;
+
   margin-bottom: 18px;
 }
 .repair-actions > span {
@@ -365,7 +369,7 @@
   font-size: 13px;
 }
 .review-groups span {
-  color: #596451;
+  color: var(--muted);
 }
 .source-list {
   padding-left: 20px;

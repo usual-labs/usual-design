@@ -2,7 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { previewStyles, OnboardingPreview } from '../src/OnboardingPreview';
+import { previewStyles } from '../src/preview-styles';
+import { ReferenceShowcase } from '../src/ReferenceShowcase';
 import {
   chosenPreview,
   recommendedChoices,
@@ -73,16 +74,77 @@ test('preview cannot load arbitrary CSS or remote resources and reports unresolv
   });
 });
 
-test('reference rendering exposes theme selection, explicit limits, and selected literal color', () => {
+test('reference sheet exposes palette, typography, control and layout specimens with explicit limits', () => {
   const html = renderToStaticMarkup(
-    createElement(OnboardingPreview, {
-      proposal,
-      choices: recommendedChoices(proposal),
+    createElement(ReferenceShowcase, {
+      values: chosenPreview(proposal, recommendedChoices(proposal), 'light'),
+      theme: 'light',
     }),
   );
   assert.match(html, /--sample-primary:#2563eb/);
-  assert.match(html, /<select/);
+  for (const label of [
+    'Color palette',
+    'Typography',
+    'Actions &amp; states',
+    'Inputs &amp; selection',
+    'Data &amp; navigation',
+    'Spacing &amp; shape',
+  ])
+    assert.ok(html.includes(label), label);
+  assert.match(html, /type="checkbox"/);
+  assert.match(html, /<textarea/);
+  assert.match(html, /<table/);
   assert.match(html, /Neutral defaults/);
   assert.match(html, /not a render of your application/);
   assert.doesNotMatch(html, /<script|<iframe|https:\/\//);
+});
+
+test('project bridge state excludes deferred selections and retains exact project option identities', async () => {
+  const { showcaseState } = await import('../../src/showcase-protocol');
+  const choices = recommendedChoices(proposal);
+  assert.deepEqual(showcaseState(proposal, choices, 'dark'), {
+    theme: 'dark',
+    selections: { action: 'blue' },
+    deferred: [],
+    values: { primary: '#93c5fd' },
+  });
+  choices.deferred = ['colors'];
+  assert.deepEqual(showcaseState(proposal, choices, 'light'), {
+    theme: 'light',
+    selections: {},
+    deferred: ['colors'],
+    values: {},
+  });
+});
+
+test('project preview uses a separate sandboxed frame and only offers supported themes', async (t) => {
+  const { OnboardingPreview } = await import('../src/OnboardingPreview');
+  const previous = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  Object.defineProperty(globalThis, 'window', {
+    configurable: true,
+    value: { location: { origin: 'http://127.0.0.1:4321' } },
+  });
+  t.after(() => {
+    if (previous) Object.defineProperty(globalThis, 'window', previous);
+    else Reflect.deleteProperty(globalThis, 'window');
+  });
+  const actual = {
+    ...proposal,
+    showcase: {
+      url: 'http://localhost:5173/catalogue',
+      title: 'Actual components',
+      themes: ['dark'] as ['dark'],
+    },
+  };
+  const html = renderToStaticMarkup(
+    createElement(OnboardingPreview, { proposal: actual, choices: recommendedChoices(actual) }),
+  );
+  assert.match(html, /<iframe/);
+  assert.match(html, /src="http:\/\/localhost:5173\/catalogue#usual-parent=/);
+  assert.match(html, /sandbox="allow-scripts allow-same-origin"/);
+  assert.doesNotMatch(html, /allow-forms|allow-popups|allow-top-navigation|x-usual-token/);
+  assert.match(html, /Actual components/);
+  assert.match(html, /aria-pressed="true"/);
+  assert.match(html, /> Dark</);
+  assert.doesNotMatch(html, /> Light<|sample-card/);
 });

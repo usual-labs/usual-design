@@ -34,6 +34,9 @@ groups, and references; group names alone do not establish semantics.
 - `scope`: manifest-compatible `include` and optional `ignore` and `tokens`.
   Include actual application roots. Document exclusions in `notes`. Tokens are
   existing CSS file paths, not token values or an inventory.
+- `showcase`: optional project-owned loopback page with `url`, `title`, and
+  supported `themes`. New onboarding should prepare this using the
+  [showcase guide](showcase.md). It never enters the manifest.
 - `notes`: optional unresolved evidence, unsupported features, themes, and scope
   rationale. Keep these honest; they do not change lint policy.
 - Each decision: stable `id`, `category`, `role`, `title`, `description`,
@@ -62,6 +65,11 @@ Only actual enforceable rules belong in `rules`; role labels alone enforce nothi
 
 ## Live preview
 
+Use the project showcase for actual fonts, full type scales, component variants,
+and interactive states. The bridge sends selected option IDs and theme; the
+project maps them to its real system. The slots below provide a compatibility
+reference sheet for older proposals and optional literal values for the bridge.
+
 `preview.light` and optional `preview.dark` accept these literal string slots:
 
 | Category | Slots |
@@ -80,7 +88,8 @@ neutral reference defaults. Dark values do not fall back to light values.
 The preview accepts bounded literal colors, lengths (`px`, `rem`, `em`, or `0`),
 unitless line height 1–2, and system font families (`system-ui`, `sans-serif`,
 `serif`, `monospace`). Custom fonts, unresolved `var()`, CSS expressions, URLs,
-remote assets, and project components are not executed. The original token names
+remote assets, and project components are not loaded into the reference sheet.
+The separate project showcase uses its own runtime and assets. The original token names
 and type rules still belong in the policy even if a preview cannot render them.
 States and roles beyond these sample slots remain enforceable through the rules.
 

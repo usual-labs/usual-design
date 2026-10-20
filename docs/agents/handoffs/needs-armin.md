@@ -1,5 +1,10 @@
 # Items for Armin when back
 
+Release correction (2026-10-20): npm 0.2.0 is published and is the registry's
+current latest before the 0.3.0 release. The expired verification note below is
+historical and no longer blocks 0.2.0. The user has authorized the next release.
+
+
 Onboarding update (2026-10-20): the dedicated skill and guided wizard are
 implemented for 0.2.0. Local API, component, and packaged-install checks passed;
 the browser walkthrough remains pending under your no-browser-testing instruction.

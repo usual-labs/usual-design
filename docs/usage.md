@@ -8,10 +8,10 @@ Copy the [README onboarding prompt](../README.md#quick-start) into your agent.
 It installs `usual-design-onboarding` from `usual-labs/usual-design` through the
 Vercel Skills CLI, reads the installed skill, and prepares recommendations from
 your project. Node 22.20+ supports the current Skills installer; our CLI needs
-22.12+. Guided onboarding requires @usualui/lint 0.2.0+.
+22.12+. This onboarding workflow requires @usualui/lint 0.3.0+.
 
 The maintained wizard walks through project scope, colors, typography, spacing,
-shape, components, and review. Choices update a shared reference screen. Preserve
+shape, components, and review. Choices update a large project component showcase beside the compact control rail. Preserve
 existing names, states, themes, and meaningful variations; nearby colors need
 not be duplicates. Defer a whole category when its decisions are not ready.
 
@@ -21,7 +21,7 @@ actual rule fragments and source evidence. The installed skill includes the
 It runs these commands from your project:
 
 ```sh
-npm install --save-dev @usualui/lint@^0.2.0
+npm install --save-dev @usualui/lint@^0.3.0
 npx --no-install usual-design init --json
 npx --no-install usual-design onboard --proposal docs/usual-design/onboarding/proposal.json
 npx --no-install usual-design onboard --proposal docs/usual-design/onboarding/proposal.json --write
@@ -30,7 +30,7 @@ npx --no-install usual-design wizard
 
 `onboard` validates without writes by default. `--write` saves a resumable proposal
 session, never policy. Open the printed local URL; the server does not auto-open
-a browser. Choices persist on Continue, Back, or Save progress. Final approval
+a browser. Choices persist on Continue, Back, or Save. Final approval
 writes the minimal manifest with all categories inactive. A fresh audit then
 lets you select a repair batch and copy a prompt for your existing agent.
 
@@ -38,9 +38,29 @@ lets you select a repair batch and copy a prompt for your existing agent.
 previous preparations are archived under `history/`. Source and policy changes
 invalidate stale approval. Refresh evidence and rerun preparation after source
 changes. Existing active/nonempty contracts use the policy workshop for
-intentional changes; onboarding does not replace them. No application code or
-project component is executed for previews. Missing/unresolved preview values
-use labeled neutral defaults; this does not prove application accessibility.
+intentional changes; onboarding does not replace them.
+
+### Project showcase (0.3.0+)
+
+The onboarding agent prepares a development-only sheet of the project's real
+components, variants, type scale, fonts, palettes, and themes. It uses the
+project's own server and font/theme setup, embedded into the right side of the
+wizard. The wizard sends selected option IDs and the light/dark theme through
+an origin-checked browser bridge. Each choice maps to real tokens or component
+props in that page; deferring a category restores its original project values.
+
+The agent starts both local servers and adds `showcase: {url, title, themes}` to
+the proposal. This metadata stays out of the manifest. See the
+[showcase guide](../skills/usual-design-onboarding/references/showcase.md) for
+coverage, bridge usage, dev-only routing, and frame policy. Upgrade to 0.3.0 or later
+for this bridge; earlier packages continue to use the reference sheet.
+After updating the showcase URL, refresh preparation and restart the wizard.
+
+If the showcase is unavailable or cannot apply a selection, the preview shows
+the failure and a reload control while retaining choices. The CLI never imports
+project modules. Older proposals without a showcase use an expanded reference
+sheet, with neutral defaults and explicit limits; it is not the actual app.
+Neither view alone proves accessibility or production layout correctness.
 
 ## Manual discovery and existing contracts
 

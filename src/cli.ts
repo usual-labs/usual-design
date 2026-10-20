@@ -35,7 +35,7 @@ try {
   });
   const command = positionals[0];
   if (v.version) {
-    console.log('0.2.0');
+    console.log('0.3.0');
   } else if (v.help || !command) {
     console.log(help);
   } else {

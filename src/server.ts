@@ -8,6 +8,7 @@ import { loadManifest, saveManifest, defaultManifest, parseManifest } from './co
 import { analyzeProject, runProject } from './project.js';
 import { activate, createPlan, saveAudit } from './records.js';
 import { hash, safePath } from './files.js';
+import { showcaseUrl } from './showcase-protocol.js';
 import {
   onboardingState,
   updateOnboarding,
@@ -41,12 +42,14 @@ export async function startWizard(root: string, configPath = 'usual.design.json'
   const token = randomBytes(32).toString('hex');
   let origin = '';
   let busy = false;
+  const showcase = (await onboardingState(root, configPath))?.session.proposal.showcase;
+  const frameOrigin = showcase ? showcaseUrl(showcase.url).origin : null;
   const assets = fileURLToPath(new URL('./wizard/', import.meta.url));
   const server = createServer(async (req, res) => {
     res.setHeader('Referrer-Policy', 'no-referrer');
     res.setHeader(
       'Content-Security-Policy',
-      "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+      `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; font-src 'self'; frame-src ${frameOrigin && frameOrigin !== origin ? frameOrigin : "'none'"}; frame-ancestors 'none'; base-uri 'none'; form-action 'self'`,
     );
     try {
       if (req.headers.host !== new URL(origin).host)
@@ -189,6 +192,7 @@ export async function startWizard(root: string, configPath = 'usual.design.json'
             '.js': 'text/javascript',
             '.css': 'text/css',
             '.svg': 'image/svg+xml',
+            '.woff2': 'font/woff2',
           } as Record<string, string>
         )[extname(file)] ?? 'application/octet-stream';
       res.writeHead(200, {
