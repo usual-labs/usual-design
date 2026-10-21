@@ -7,8 +7,11 @@ The npm package is `@usualui/lint`. Its executable remains `usual-design`, so pr
 `@usualui/lint@0.1.0` was published on 2026-10-20 using the authenticated npm owner session. The archive came from the successful GitHub Actions dry run for commit `76da0d3`. Its registry integrity matched the CI archive; a clean registry installation passed `usual-design --version` and `--help`. This first release has no GitHub publish provenance.
 
 `@usualui/lint@0.2.0` was also published through the authenticated owner session.
-The registry reports it as `latest` before preparing 0.3.0. Account verification
-may be required again for each publication.
+Version `0.3.0` was published on 2026-10-21 through the authenticated owner session
+and verified as `latest`. Its registry integrity matches the CI archive, and a
+clean registry installation passed CLI and packaged-asset checks. See the
+[release receipt](agents/releases/0.3.0.md). Account verification may be required
+again for each publication.
 
 Do not try to publish `0.1.0` again. Its archive is immutable. Updated documentation in the source repository will reach the npm package with a subsequent release.
 
